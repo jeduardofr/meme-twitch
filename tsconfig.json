@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "target": "ES6",
+        "jsx": "react",
+        "typeRoots": ["./node_modules/@types"],
+        "baseUrl": "./resources/ts",
+        "paths": {
+            "~": ["/*"]
+        }
+    },
+    "include": ["./resources/ts/**/*"],
+    "exclude": ["node_modules"]
+}
