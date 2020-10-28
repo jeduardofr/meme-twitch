@@ -11,13 +11,19 @@ const mix = require("laravel-mix");
  |
  */
 
+const browserSyncConfiguration = {
+    open: "external",
+    proxy: process.env.MIX_PROXY,
+    files: ["resources/views/**/*.php", "public/js/*.js", "public/css/*.css"],
+    notify: false
+};
+
+if (process.env.MIX_PROXY !== "webserver") {
+    browserSyncConfiguration.host = process.env.MIX_PROXY;
+}
+
 mix.ts("resources/ts/index.tsx", "public/js")
-    .browserSync({
-        open: "external",
-        proxy: "webserver",
-        files: ["resources/views/**/*.php", "public/js/*.js"],
-        notify: false
-    })
+    .browserSync(browserSyncConfiguration)
     .postCss("resources/css/tailwind.css", "public/css", [
         require("tailwindcss")
     ]);
