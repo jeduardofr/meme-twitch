@@ -18,4 +18,6 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'thumbnail', 'thumbnail_mime_type'];
 }
