@@ -32,7 +32,6 @@ class CategoryController extends Controller
             'name'                => $request->name,
             'thumbnail'           => $request->url ?? $image->name,
             'thumbnail_mime_type' => $request->has('url') ? null : $image->mime_type,
-            'is_url'              => $request->has('url')
         ]);
 
         return new CategoryResource($category);
@@ -43,26 +42,18 @@ class CategoryController extends Controller
         if ($request->hasFile('thumbnail')) {
             $this->fileService->removeIfExists('public/categories/'. $category->thumbnail);
             $image = $this->fileService->upload('public/categories', $request->file('thumbnail'));
+            $category->thumbnail = $image->name;
+            $category->thumbnail_mime_type = $image->mime_type;
         }
 
-        $thumbnail = $request->has('url')
-            ? $request->url
-            : ($request->hasFile('thumbnail')
-                ? $image->name
-                : $category->thumbnail);
+        if ($request->has('url')) {
+            $this->fileService->removeIfExists('public/categories/'. $category->thumbnail);
+            $category->thumbnail = $request->url;
+        }
 
-        $is_url = $request->has('url')
-            ? true
-            : ($request->hasFile('thumbnail')
-                ? false
-                : $category->is_url);
+        $category->name = $request->name ?? $category->name;
+        $category->save();
 
-        $category->update([
-            'name'                => $request->name ?? $category->name,
-            'thumbnail'           => $thumbnail,
-            'thumbnail_mime_type' => $request->hasFile('thumbnail') ? $image->mime_type : $request->mime_type,
-            'is_url'              => $is_url
-        ]);
 
         return (new CategoryResource($category))
             ->response()

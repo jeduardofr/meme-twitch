@@ -30,4 +30,11 @@ class Category extends Model
 
         return asset('storage/categories/' . $this->thumbnail);
     }
+
+    public function setThumbnailAttribute($value)
+    {
+        $this->attributes['thumbnail'] = $value;
+
+        $this->attributes['is_url'] = filter_var($value, FILTER_VALIDATE_URL) ? true : false;
+    }
 }
