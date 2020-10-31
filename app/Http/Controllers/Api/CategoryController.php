@@ -7,7 +7,6 @@ use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\FileService;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -41,22 +40,38 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-        $data = [ 'name' => $request->name ];
         if ($request->hasFile('thumbnail')) {
-            $image = $request->file('thumbnail');
-            $thumbnail = Str::uuid()->toString() . '.' . $image->getClientOriginalExtension();
-            $request->file('thumbnail')->storeAs('categories', $thumbnail);
-            $data['thumbnail'] = $thumbnail;
-            $data['thumbnail_mime_type'] = $image->getMimeType();
+            $this->fileService->removeIfExists('public/categories/'. $category->thumbnail);
+            $image = $this->fileService->upload('public/categories', $request->file('thumbnail'));
         }
 
-        $category->update($data);
+        $thumbnail = $request->has('url')
+            ? $request->url
+            : ($request->hasFile('thumbnail')
+                ? $image->name
+                : $category->thumbnail);
 
-        return $category;
+        $is_url = $request->has('url')
+            ? true
+            : ($request->hasFile('thumbnail')
+                ? false
+                : $category->is_url);
+
+        $category->update([
+            'name'                => $request->name ?? $category->name,
+            'thumbnail'           => $thumbnail,
+            'thumbnail_mime_type' => $request->hasFile('thumbnail') ? $image->mime_type : $request->mime_type,
+            'is_url'              => $is_url
+        ]);
+
+        return (new CategoryResource($category))
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function destroy(Category $category)
     {
+        $this->fileService->removeIfExists('public/categories/' . $category->thumbnail);
         $category->delete();
 
         return response()->json();
