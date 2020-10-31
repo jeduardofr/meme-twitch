@@ -17,8 +17,9 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string("name", 90);
-            $table->string("thumbnail", 45);
-            $table->string("thumbnail_mime_type", 30);
+            $table->longText("thumbnail");
+            $table->string("thumbnail_mime_type", 30)->nullable();
+            $table->boolean("is_url");
         });
     }
 

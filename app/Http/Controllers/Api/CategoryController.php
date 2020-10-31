@@ -4,27 +4,39 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\FileService;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function index()
     {
-        return Category::all();
+        return CategoryResource::collection(Category::all());
     }
 
     public function store(CategoryRequest $request)
     {
-        $image = $request->file('thumbnail');
-        $thumbnail = Str::uuid()->toString() . '.' . $image->getClientOriginalExtension();
-        $request->file('thumbnail')->storeAs('categories', $thumbnail);
+        if ($request->hasFile('thumbnail')) {
+            $image = $this->fileService->upload('public/categories', $request->file('thumbnail'));
+        }
 
-        return Category::create([
+        $category = Category::create([
             'name'                => $request->name,
-            'thumbnail'           => $thumbnail,
-            'thumbnail_mime_type' => $image->getMimeType()
+            'thumbnail'           => $request->url ?? $image->name,
+            'thumbnail_mime_type' => $request->has('url') ? null : $image->mime_type,
+            'is_url'              => $request->has('url')
         ]);
+
+        return new CategoryResource($category);
     }
 
     public function update(CategoryRequest $request, Category $category)
