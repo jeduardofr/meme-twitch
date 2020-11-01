@@ -22,6 +22,8 @@ class Category extends Model
 
     protected $fillable = ['name', 'thumbnail', 'thumbnail_mime_type', 'is_url'];
 
+    protected $with = ['appearances'];
+
     public function getUrlAttribute()
     {
         if ($this->is_url) {
@@ -36,5 +38,10 @@ class Category extends Model
         $this->attributes['thumbnail'] = $value;
 
         $this->attributes['is_url'] = filter_var($value, FILTER_VALIDATE_URL) ? true : false;
+    }
+
+    public function appearances()
+    {
+        return $this->hasMany(CategorySound::class);
     }
 }

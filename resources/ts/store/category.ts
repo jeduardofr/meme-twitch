@@ -6,6 +6,7 @@ export interface Category {
     name: string;
     url: string;
     mimeType: string | null;
+    count: number;
     createdAt: Date;
     updatedAt: Date;
 }

@@ -19,8 +19,9 @@ class CategoryResource extends JsonResource
             'name'      => $this->name,
             'url'       => $this->url,
             'mimeType'  => $this->thumbnail_mime_type,
+            'count'     => $this->appearances()->count(),
             'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'updatedAt' => $this->updated_at,
         ];
     }
 }
