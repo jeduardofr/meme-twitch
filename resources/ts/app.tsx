@@ -5,12 +5,13 @@ import store from "./store";
 import Home from "./pages/home";
 import CategoryList from "./pages/category-list";
 import Navigation from "./ui/navigation";
+import NotificationWrapper from "./ui/notification/notification-wrapper";
 
 function App() {
     return (
         <StoreProvider store={store}>
             <BrowserRouter>
-                <div className="container mx-auto flex flex-row mt-4">
+                <div className="container mx-auto flex flex-row mt-4 relative">
                     <div className="flex flex-1">
                         <Switch>
                             <Route exact path="/" component={Home} />
@@ -21,7 +22,9 @@ function App() {
                             />
                         </Switch>
                     </div>
+
                     <Navigation />
+                    <NotificationWrapper />
                 </div>
             </BrowserRouter>
         </StoreProvider>

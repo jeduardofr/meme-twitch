@@ -12,8 +12,9 @@ export interface Category {
 
 export interface CategoryRequest {
     id: number;
-    url: string;
+    url?: string;
     name: string;
+    thumbnail?: string;
 }
 
 export interface CategoryModel {
