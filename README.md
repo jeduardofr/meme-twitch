@@ -46,3 +46,6 @@ Start local environment
 
     $ npm run watch
 
+Refresh Database
+
+    $ php artisan migrate:fresh
