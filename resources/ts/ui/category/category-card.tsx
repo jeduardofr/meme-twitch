@@ -1,5 +1,5 @@
 import React from "react";
-import { Category } from "../../store/category";
+import { Category } from "../../hooks/category.hook";
 
 type Props = {
     category: Category;

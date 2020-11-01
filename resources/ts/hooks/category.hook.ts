@@ -1,13 +1,18 @@
 import useSWR from "swr";
-import { Category } from "../store/category";
+import { useGetRequest } from "../utils/api";
 
-const fetcher = (...args) => fetch(...args).then(response => response.json());
+export interface Category {
+    id: number;
+    name: string;
+    url: string;
+    mimeType: string | null;
+    count: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
 
 export default function useCategory() {
-    const { data, error } = useSWR<Category[]>(
-        "http://meme-twitch.test/api/categories",
-        fetcher
-    );
+    const { data, error } = useSWR<Category[]>("/categories", useGetRequest);
 
     return {
         data,
