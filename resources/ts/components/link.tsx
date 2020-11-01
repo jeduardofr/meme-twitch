@@ -16,7 +16,7 @@ function Link({ text, to, icon, selected }: Props) {
         <BaseLink
             to={to}
             className={clsx(
-                "flex flex-row space-x-2 hover:text-blue-green text-lg",
+                "flex flex-row space-x-2 hover:text-blue-green font-medium",
                 {
                     "text-snow": !selected,
                     "text-blue-green": selected
