@@ -1,27 +1,40 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import clsx from "clsx";
 import React from "react";
 import { FieldError } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type InputProps = React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
 > & {
-    label: string;
     errors: FieldError;
+    icon: IconProp;
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ id, label, errors, ...props }, ref) => (
-        <div>
-            <label className="text-snow block" htmlFor={id}>
-                {label}
-            </label>
-            <input
-                className="bg-independence text-snow focus:outline-none rounded-md py-2 px-4 mt-2"
-                id={id}
-                ref={ref}
-                {...props}
-            />
-            {errors && <span>{errors.message}</span>}
+    ({ id, icon, errors, ...props }, ref) => (
+        <div className="flex flex-1">
+            <div className="flex flex-row w-full">
+                <input
+                    className={clsx(
+                        "form-input block w-full border-none bg-independence text-snow focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
+                        {
+                            "border-mikado-yellow border": errors
+                        }
+                    )}
+                    ref={ref}
+                    {...props}
+                />
+                <div className="bg-mikado-yellow text-independence rounded-r-md flex justify-center items-center px-3">
+                    <FontAwesomeIcon icon={icon} />
+                </div>
+            </div>
+            {errors && (
+                <p className="text-snow text-sm font-medium mt-2">
+                    {errors.message}
+                </p>
+            )}
         </div>
     )
 );

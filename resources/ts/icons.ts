@@ -6,7 +6,10 @@ import {
     faTags,
     faSignInAlt,
     faSignOutAlt,
-    faBars
+    faBars,
+    faPencilAlt,
+    faImage,
+    faPlusCircle
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -16,5 +19,8 @@ library.add(
     faTags,
     faSignInAlt,
     faSignOutAlt,
-    faBars
+    faBars,
+    faPencilAlt,
+    faImage,
+    faPlusCircle
 );
