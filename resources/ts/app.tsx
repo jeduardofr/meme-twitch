@@ -14,7 +14,7 @@ function App() {
     return (
         <StoreProvider store={store}>
             <BrowserRouter>
-                <div className="container relative flex flex-row mx-auto mt-4">
+                <div className="md:container relative flex flex-col-reverse md:flex-row mx-auto mt-4">
                     <div className="flex flex-1">
                         <Switch>
                             <Route exact path="/" component={Home} />
