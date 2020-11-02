@@ -27,13 +27,17 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.32",
         "@fortawesome/free-solid-svg-icons": "^5.15.1",
         "@fortawesome/react-fontawesome": "^0.1.12",
+        "@hookform/resolvers": "^1.0.0",
         "@types/react-router-dom": "^5.1.6",
+        "@types/yup": "^0.29.9",
         "clsx": "^1.1.1",
         "easy-peasy": "^4.0.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
+        "react-hook-form": "^6.10.1",
         "react-router-dom": "^5.2.0",
         "swr": "^0.3.8",
-        "tailwindcss": "^1.9.6"
+        "tailwindcss": "^1.9.6",
+        "yup": "^0.29.3"
     }
 }
