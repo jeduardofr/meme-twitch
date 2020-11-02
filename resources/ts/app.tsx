@@ -8,13 +8,13 @@ import CategoryList from "./pages/category-list";
 import SignIn from "./pages/sign-in";
 
 import NotificationWrapper from "./ui/notification/notification-wrapper";
-import Navigation from "./ui/navigation";
+import Sidebar from "./ui/sidebar";
 
 function App() {
     return (
         <StoreProvider store={store}>
             <BrowserRouter>
-                <div className="md:container relative flex flex-col-reverse md:flex-row mx-auto mt-4">
+                <div className="container relative flex flex-col-reverse md:flex-row mx-auto bg-space-cadet rounded-t-2xl py-8 mt-16">
                     <div className="flex flex-1">
                         <Switch>
                             <Route exact path="/" component={Home} />
@@ -27,7 +27,7 @@ function App() {
                         </Switch>
                     </div>
 
-                    <Navigation />
+                    <Sidebar />
                     <NotificationWrapper />
                 </div>
             </BrowserRouter>

@@ -13,7 +13,7 @@ const links: Omit<LinkProps, "selected">[] = [
     { to: "/sign-in", text: "Iniciar Sesión", icon: "sign-out-alt" }
 ];
 
-function Navigation() {
+function Sidebar() {
     const isLargerThanMd = useMedia({ minWidth: "768px" });
     const location = useLocation();
     const { open, setOpen } = useMenu();
@@ -58,4 +58,4 @@ function Navigation() {
     );
 }
 
-export default Navigation;
+export default Sidebar;
