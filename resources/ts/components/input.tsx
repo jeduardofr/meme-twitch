@@ -14,7 +14,7 @@ type InputProps = React.DetailedHTMLProps<
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ id, icon, errors, ...props }, ref) => (
-        <div className="flex flex-1">
+        <div className="flex flex-1 flex-col">
             <div className="flex flex-row w-full">
                 <input
                     className={clsx(

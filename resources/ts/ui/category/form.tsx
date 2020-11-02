@@ -37,7 +37,7 @@ function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
                 errors={errors.name}
                 icon="pencil-alt"
             />
-            <div className="flex flex-row mt-4 space-x-4">
+            <div className="flex flex-col md:flex-row mt-4 space-y-4 md:space-x-4 md:space-y-0">
                 <div>
                     <Select
                         name="type"
