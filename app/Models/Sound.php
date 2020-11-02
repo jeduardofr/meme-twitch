@@ -10,7 +10,6 @@ class Sound extends Model
     use HasFactory;
 
     protected $fillable = ['keyword', 'author', 'audio', 'audio_mime_type', 'id_url', 'thumbnail', 'thumbnail_mime_type'];
-    protected $with = ['appaerances'];
 
     public function getUrlAttribute()
     {

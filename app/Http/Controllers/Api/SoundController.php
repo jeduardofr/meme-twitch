@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SoundRequest;
 use App\Http\Resources\SoundResource;
 use App\Models\Sound;
 use App\Services\FileService;
-use Illuminate\Http\Request;
 
 class SoundController extends Controller
 {
@@ -25,44 +25,54 @@ class SoundController extends Controller
     }
 
     // Donde se llama a la base de datos para mostrar
-    public function store(Request $request)
+    public function store(SoundRequest $request)
     {
+        if ($request->hasFile('thumbnail')) {
+            $image = $this->fileService->upload('public/images', $request->file('thumbnail'));
+        }
+        $audio = $this->fileService->upload('public/sounds', $request->file('audio'));
+
+
         $sound = Sound::create([
             'keyword'               => $request->keyword,
             'author'                => $request->author,
-            'audio'                 => $request->audio,
-            'audio_mime_type'       => $request->audio_mime_type,
-            'thumbnail'             => $request->thumnail,
-            'thumbnail_mime_type'   => $request->thumbnail_mime_type,
+            'audio'                 => $audio->name,
+            'audio_mime_type'       => $audio->mime_type,
+            'thumbnail'             => $request->hasFile('thumbnail') ? $image->name: $request->thumbnail,
+            'thumbnail_mime_type'   => $request->hasFile('thumbnail') ? $image->mime_type : null,
         ]);
 
         return new SoundResource($sound);
     }
 
-    public function update(Request $request, Sound $sound)
+    public function update(SoundRequest $request, Sound $sound)
     {
         if ($request->hasFile('thumbnail')) {
-            $this->fileService->removeIfExists('public/sounds/'. $sound->thumbnail);
-            $image = $this->fileService->upload('public/sounds/', $request->file('thumbnail'));
+            $this->fileService->removeIfExists('public/images/'. $sound->thumbnail);
+            $image = $this->fileService->upload('public/images/', $request->file('thumbnail'));
             $sound->thumbnail = $image->name;
             $sound->thumbnail_mime_type = $image->mime_type;
+        } else {
+            $this->fileService->removeIfExists('public/images/'. $sound->thumbnail);
+            $sound->thumbnail = $request->thumbnail;
         }
 
-        if ($request->has('url')) {
-            $this->fileService->removeIfExists('public/sounds/'. $sound->thumbnail);
-            $sound->thumbnail = $request->url;
-        }
+        $this->fileService->removeIfExists('public/sounds/' . $sound->audio);
+        $audio = $this->fileService->upload('public/sounds', $request->file('audio'));
+        $sound->audio = $audio->name;
+        $sound->audio_mime_type = $audio->mime_type;
 
-        $sound->name = $request->name ?? $sound->name;
-        $sound->audio = $request->audio ?? $sound->audio;
         $sound->save();
 
-        return (new SoundResource($sound))->response()->setStatusCode(200);
+        return (new SoundResource($sound))
+            ->response()
+            ->setStatusCode(200);
     }
 
-    public function destroy($sound)
+    public function destroy(Sound $sound)
     {
-        $this->fileService->removeIfExists('public/sounds/' . $sound->thumnail);
+        $this->fileService->removeIfExists('public/images/' . $sound->thumbnail);
+        $this->fileService->removeIfExists('public/sounds/' . $sound->audio);
         $sound->delete();
 
         return response()-> json();
