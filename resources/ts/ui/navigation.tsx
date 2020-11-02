@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useMedia from "use-media";
+import { Transition } from "@headlessui/react";
 import NavbarLink, { Props as LinkProps } from "../components/navbar-link";
 import useMenu from "../hooks/menu.hook";
 import clsx from "clsx";
@@ -30,22 +31,29 @@ function Navigation() {
                     <FontAwesomeIcon icon="bars" size="2x" />
                 </button>
             </div>
-            {(open || isLargerThanMd) && (
-                <ul className="space-y-4">
-                    {links.map(link => {
-                        return (
-                            <li key={link.to}>
-                                <NavbarLink
-                                    to={link.to}
-                                    text={link.text}
-                                    icon={link.icon}
-                                    selected={link.to === location.pathname}
-                                />
-                            </li>
-                        );
-                    })}
-                </ul>
-            )}
+            <Transition
+                show={open || isLargerThanMd}
+                enter="transition-opacity duration-75"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+                as="ul"
+            >
+                {links.map(link => {
+                    return (
+                        <li key={link.to}>
+                            <NavbarLink
+                                to={link.to}
+                                text={link.text}
+                                icon={link.icon}
+                                selected={link.to === location.pathname}
+                            />
+                        </li>
+                    );
+                })}
+            </Transition>
         </nav>
     );
 }
