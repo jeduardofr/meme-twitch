@@ -9,15 +9,20 @@ class Sound extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['keyword', 'author', 'audio', 'audio_mime_type', 'id_url', 'thumbnail', 'thumbnail_mime_type'];
+    protected $fillable = ['keyword', 'author', 'audio', 'audio_mime_type', 'is_url', 'thumbnail', 'thumbnail_mime_type'];
 
-    public function getUrlAttribute()
+    public function getThumbnailUrlAttribute()
     {
         if ($this->is_url) {
             return $this->thumbnail;
         }
 
         return asset('storage/sounds/' . $this->thumbnail);
+    }
+
+    public function getAudioUrlAttribute()
+    {
+        return asset('storage/sounds/' . $this->audio);
     }
 
     public function setThumbnailAttribute($value)

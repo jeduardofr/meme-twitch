@@ -15,15 +15,15 @@ class SoundResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'keyword' => $this->keyword,
-            'author' => $this->author,
-            'audio' => $this->audio,
-            'audioMimeType' => $this->audio_mime_type,
-            'thumbnail' => $this->thumbnail,
+            'id'                => $this->id,
+            'keyword'           => $this->keyword,
+            'author'            => $this->author,
+            'audioUrl'          => $this->audiourl,
+            'audioMimeType'     => $this->audio_mime_type,
+            'thumbnailUrl'      => $this->thumbnailurl,
             'thumbnailMimeType' => $this->thumbnail_mime_type,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
+            'createdAt'         => $this->created_at,
+            'updatedAt'         => $this->updated_at,
         ];
     }
 }

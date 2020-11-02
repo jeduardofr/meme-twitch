@@ -24,8 +24,8 @@ class SoundRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword' => 'required|max:20|min:4|unique:sounds',
-            'audio' => 'required',
+            'keyword'   => 'required|max:20|min:4|unique:sounds',
+            'audio'     => 'required',
             'thumbnail' => 'required',
         ];
     }
