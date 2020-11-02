@@ -1,6 +1,10 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import Link, { Props as LinkProps } from "../components/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useMedia from "use-media";
+import NavbarLink, { Props as LinkProps } from "../components/navbar-link";
+import useMenu from "../hooks/menu.hook";
+import clsx from "clsx";
 
 const links: Omit<LinkProps, "selected">[] = [
     { to: "/", text: "Inicio", icon: "home" },
@@ -9,24 +13,39 @@ const links: Omit<LinkProps, "selected">[] = [
 ];
 
 function Navigation() {
+    const isLargerThanMd = useMedia({ minWidth: "768px" });
     const location = useLocation();
+    const { open, setOpen } = useMenu();
 
     return (
-        <nav className="w-64">
-            <ul className="space-y-4">
-                {links.map(link => {
-                    return (
-                        <li key={link.to}>
-                            <Link
-                                to={link.to}
-                                text={link.text}
-                                icon={link.icon}
-                                selected={link.to === location.pathname}
-                            />
-                        </li>
-                    );
-                })}
-            </ul>
+        <nav className="w-full md:w-64">
+            <div className="px-4 text-right md:hidden">
+                <button
+                    onClick={() => setOpen(!open)}
+                    className={clsx({
+                        "text-snow": !open,
+                        "text-blue-green": open
+                    })}
+                >
+                    <FontAwesomeIcon icon="bars" size="2x" />
+                </button>
+            </div>
+            {(open || isLargerThanMd) && (
+                <ul className="space-y-4">
+                    {links.map(link => {
+                        return (
+                            <li key={link.to}>
+                                <NavbarLink
+                                    to={link.to}
+                                    text={link.text}
+                                    icon={link.icon}
+                                    selected={link.to === location.pathname}
+                                />
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </nav>
     );
 }

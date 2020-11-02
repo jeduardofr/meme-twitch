@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Link as BaseLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -11,15 +11,14 @@ export interface Props {
     selected: boolean;
 }
 
-function Link({ text, to, icon, selected }: Props) {
+function NavbarLink({ text, to, icon, selected }: Props) {
     return (
-        <BaseLink
+        <Link
             to={to}
             className={clsx(
-                "flex flex-row space-x-2 hover:text-blue-green font-medium",
+                "flex flex-row space-x-2 font-medium text-snow p-2 rounded-lg",
                 {
-                    "text-snow": !selected,
-                    "text-blue-green": selected
+                    "bg-space-cadet": selected
                 }
             )}
         >
@@ -27,8 +26,8 @@ function Link({ text, to, icon, selected }: Props) {
                 <FontAwesomeIcon icon={icon} />
             </div>
             <span>{text}</span>
-        </BaseLink>
+        </Link>
     );
 }
 
-export default Link;
+export default NavbarLink;
