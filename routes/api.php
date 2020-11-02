@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix'=>'sounds'], function () {
-    Route::get('/', [SoundController::class, "index"]);
-    Route::put('/{sound}', [SoundController::class, "update"]);
-    Route::delete('/{sound}', [SoundController::class, "destroy"]);
-    Route::post('/', [SoundController::class, "store"]);
-});
+// Route::group(['prefix'=>'sounds'], function () {
+//     Route::get('/', [SoundController::class, "index"]);
+//     Route::post('/', [SoundController::class, "store"]);
+//     Route::put('/{sound}', [SoundController::class, "update"]);
+//     Route::delete('/{sound}', [SoundController::class, "destroy"]);
+// });
 
+Route::resource('sounds', SoundController::class)->except(['edit', 'show', 'create']);
 Route::resource('categories', CategoryController::class)->except(['show', 'create', 'edit']);
