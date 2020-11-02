@@ -27,6 +27,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.32",
         "@fortawesome/free-solid-svg-icons": "^5.15.1",
         "@fortawesome/react-fontawesome": "^0.1.12",
+        "@headlessui/react": "^0.2.0",
         "@hookform/resolvers": "^1.0.0",
         "@types/react-router-dom": "^5.1.6",
         "@types/yup": "^0.29.9",
