@@ -14,7 +14,8 @@ module.exports = {
                 "space-cadet": "#1C2541",
                 independence: "#3A506B",
                 "mikado-yellow": "#FFC300",
-                "blue-green": "#5BC0BE"
+                "blue-green": "#5BC0BE",
+                gray: "#CED4DA"
             }
         }
     },

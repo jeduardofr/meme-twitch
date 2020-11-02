@@ -10,9 +10,9 @@ function CategoryList() {
     if (!data) return <p>Loading</p>;
 
     return (
-        <div className="w-full">
+        <div className="w-full px-8">
             <Form />
-            <h1 className="text-4xl text-snow">Categorías</h1>
+            <h1 className="text-4xl text-blue-green font-bold">Categorías</h1>
             <div className="grid grid-cols-12 gap-6 w-full mt-4">
                 {data.map(category => (
                     <CategoryCard key={category.id} category={category} />
