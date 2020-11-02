@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useGetRequest, usePostRequest } from "../utils/api";
+import { useDeleteRequest, useGetRequest, usePostRequest } from "../utils/api";
 
 export interface Category {
     id: number;
@@ -34,9 +34,15 @@ export default function useCategory() {
         mutate([...data, category]);
     }
 
+    async function deleteCategory(id: number) {
+        await useDeleteRequest(`/categories/${id}`);
+        mutate(data.filter(c => c.id !== id));
+    }
+
     return {
         data,
         error,
-        createCategory
+        createCategory,
+        deleteCategory
     };
 }

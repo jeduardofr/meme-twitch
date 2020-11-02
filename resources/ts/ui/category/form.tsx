@@ -17,7 +17,7 @@ function Form() {
     const { createCategory } = useCategory();
 
     return (
-        <form onSubmit={handleSubmit(d => console.log(d))}>
+        <form onSubmit={handleSubmit(createCategory)}>
             <Input
                 ref={register}
                 name="name"
