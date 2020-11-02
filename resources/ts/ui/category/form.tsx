@@ -2,39 +2,64 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import useCategory, { CategoryForm } from "../../hooks/category.hook";
+import useCategory, {
+    CategoryForm as BaseCategoryForm
+} from "../../hooks/category.hook";
 import Input from "../../components/input";
+import Select from "../../components/select";
+import Button from "../../components/button";
 
 const schema = yup.object().shape({
-    name: yup.string().required(),
-    url: yup.string().required()
+    name: yup.string().required("El nombre es obligatorio"),
+    url: yup.string().required("La URL es obligatoria")
 });
 
-function Form() {
+type CategoryForm = {
+    type: "url" | "file";
+} & BaseCategoryForm;
+
+type FormProps = { defaultValues?: CategoryForm };
+
+function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
     const { register, handleSubmit, errors } = useForm<CategoryForm>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues
     });
     const { createCategory } = useCategory();
 
     return (
-        <form onSubmit={handleSubmit(createCategory)}>
+        <form onSubmit={handleSubmit(d => console.log(d))}>
             <Input
                 ref={register}
                 name="name"
                 id="name"
                 placeholder="Nombre"
-                label="Nombre"
                 errors={errors.name}
+                icon="pencil-alt"
             />
-            <Input
-                ref={register}
-                name="url"
-                id="url"
-                placeholder="URL de imagen"
-                label="URL"
-                errors={errors.url}
-            />
-            <input type="submit" value="Agregar" />
+            <div className="flex flex-row mt-4 space-x-4">
+                <div>
+                    <Select
+                        name="type"
+                        ref={register}
+                        options={[
+                            { label: "URL", value: "url" },
+                            { label: "Imagen local", value: "file" }
+                        ]}
+                    />
+                </div>
+                <Input
+                    ref={register}
+                    name="url"
+                    id="url"
+                    placeholder="URL de imagen"
+                    errors={errors.url}
+                    icon="image"
+                />
+            </div>
+            <div className="text-right mt-4">
+                <Button text="Agregar" icon="plus-circle" />
+            </div>
         </form>
     );
 }
