@@ -17,7 +17,7 @@ class Sound extends Model
             return $this->thumbnail;
         }
 
-        return asset('storage/sounds/' . $this->thumbnail);
+        return asset('storage/images/' . $this->thumbnail);
     }
 
     public function getAudioUrlAttribute()

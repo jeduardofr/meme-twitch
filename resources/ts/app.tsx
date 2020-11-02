@@ -8,6 +8,8 @@ import CategoryList from "./pages/category-list";
 import SignIn from "./pages/sign-in";
 import NotFound from "./pages/not-found";
 
+import Audios from "./pages/audios";
+
 import NotificationWrapper from "./ui/notification/notification-wrapper";
 import Sidebar from "./ui/sidebar";
 
@@ -25,6 +27,7 @@ function App() {
                                 component={CategoryList}
                             />
                             <Route exact path="/sign-in" component={SignIn} />
+                            <Route exact path="/audios" component={Audios} />
                             <Route component={NotFound} />
                         </Switch>
                     </div>
