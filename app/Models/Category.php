@@ -30,7 +30,7 @@ class Category extends Model
             return $this->thumbnail;
         }
 
-        return asset('storage/categories/' . $this->thumbnail);
+        return asset('storage/images/' . $this->thumbnail);
     }
 
     public function setThumbnailAttribute($value)
