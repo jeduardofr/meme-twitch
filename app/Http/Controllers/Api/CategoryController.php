@@ -30,8 +30,8 @@ class CategoryController extends Controller
 
         $category = Category::create([
             'name'                => $request->name,
-            'thumbnail'           => $request->url ?? $image->name,
-            'thumbnail_mime_type' => $request->has('url') ? null : $image->mime_type,
+            'thumbnail'           => $request->hasFile('thumbnail') ? $image->name : $request->thumbnail,
+            'thumbnail_mime_type' => $request->hasFile('thumbnail') ? $image->mime_type : null,
         ]);
 
         return new CategoryResource($category);
@@ -44,11 +44,9 @@ class CategoryController extends Controller
             $image = $this->fileService->upload('public/categories', $request->file('thumbnail'));
             $category->thumbnail = $image->name;
             $category->thumbnail_mime_type = $image->mime_type;
-        }
-
-        if ($request->has('url')) {
+        } elseif ($request->has('thumbnail')) {
             $this->fileService->removeIfExists('public/categories/'. $category->thumbnail);
-            $category->thumbnail = $request->url;
+            $category->thumbnail = $request->thumbnail;
         }
 
         $category->name = $request->name ?? $category->name;

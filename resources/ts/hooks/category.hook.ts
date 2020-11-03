@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { useDeleteRequest, useGetRequest, usePostRequest } from "../utils/api";
+import { useStoreActions } from "./store";
 
 export interface Category {
     id: number;
@@ -11,27 +12,48 @@ export interface Category {
     updatedAt: Date;
 }
 
-// @@@ Add thumbnail field to upload image
+export type ThumbnailType = "url" | "file";
+
 export type CategoryForm = {
     name: string;
     url: string;
+    file: FileList;
+    type: ThumbnailType;
 };
 
 export default function useCategory() {
+    const addNotification = useStoreActions(
+        state => state.notification.addNotification
+    );
+
     const { data, error, mutate } = useSWR<Category[]>(
         "/categories",
         useGetRequest
     );
 
     async function createCategory(body: CategoryForm) {
+        const formData = new FormData();
+        formData.append("name", body.name);
+        if (body.type === "url") {
+            formData.append("url", body.url);
+        } else {
+            formData.append("thumbnail", body.file[0]);
+        }
+
         const category = await usePostRequest("/categories", {
             headers: {
-                "Content-Type": "application/json"
+                "X-Requested-With": "XMLHttpRequest"
             },
-            body: JSON.stringify(body)
+            body: formData
         });
 
         mutate([...data, category]);
+        addNotification({
+            title: "Categoría",
+            message: "Categoría agregada exitosamente",
+            time: 3000,
+            level: "success"
+        });
     }
 
     async function deleteCategory(id: number) {
