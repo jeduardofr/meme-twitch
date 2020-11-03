@@ -25,8 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name'      => 'required|max:90',
-            'url'       => 'sometimes|url',
-            'thumbnail' => 'sometimes|image',
+            'thumbnail' => 'required',
         ];
     }
 }
