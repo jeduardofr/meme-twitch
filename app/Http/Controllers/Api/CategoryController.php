@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         if ($request->hasFile('thumbnail')) {
-            $image = $this->fileService->upload('public/categories', $request->file('thumbnail'));
+            $image = $this->fileService->upload('public/images', $request->file('thumbnail'));
         }
 
         $category = Category::create([
@@ -40,12 +40,12 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category)
     {
         if ($request->hasFile('thumbnail')) {
-            $this->fileService->removeIfExists('public/categories/'. $category->thumbnail);
-            $image = $this->fileService->upload('public/categories', $request->file('thumbnail'));
+            $this->fileService->removeIfExists('public/images/'. $category->thumbnail);
+            $image = $this->fileService->upload('public/images', $request->file('thumbnail'));
             $category->thumbnail = $image->name;
             $category->thumbnail_mime_type = $image->mime_type;
         } elseif ($request->has('thumbnail')) {
-            $this->fileService->removeIfExists('public/categories/'. $category->thumbnail);
+            $this->fileService->removeIfExists('public/images/'. $category->thumbnail);
             $category->thumbnail = $request->thumbnail;
         }
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        $this->fileService->removeIfExists('public/categories/' . $category->thumbnail);
+        $this->fileService->removeIfExists('public/images/' . $category->thumbnail);
         $category->delete();
 
         return response()->json();
