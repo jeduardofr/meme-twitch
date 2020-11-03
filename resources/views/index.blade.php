@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
     </head>
-    <body class="bg-space-cadet">
+    <body class="bg-blue-dark">
         <div id="app"></div>
         <script src="{{ mix('/js/index.js') }}"></script>
     </body>

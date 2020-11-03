@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useMedia from "use-media";
 import { Transition } from "@headlessui/react";
 import NavbarLink, { Props as LinkProps } from "../components/navbar-link";
+import Profile from "../ui/profile";
 import useMenu from "../hooks/menu.hook";
 import clsx from "clsx";
 
@@ -19,7 +20,7 @@ function Sidebar() {
     const { open, setOpen } = useMenu();
 
     return (
-        <nav className="w-full md:w-64">
+        <nav className="bg-blue min-h-screen w-full md:w-64">
             <div className="px-4 text-right md:hidden">
                 <button
                     onClick={() => setOpen(!open)}
@@ -31,6 +32,7 @@ function Sidebar() {
                     <FontAwesomeIcon icon="bars" size="2x" />
                 </button>
             </div>
+
             <Transition
                 show={open || isLargerThanMd}
                 enter="transition-opacity duration-75"
@@ -41,6 +43,12 @@ function Sidebar() {
                 leaveTo="opacity-0"
                 as="ul"
             >
+                <li>
+                    <Profile />
+                </li>
+                <li className="mt-4 px-4 text-grey font-bold text-xs uppercase tracking-widest py-3">
+                    Opciones
+                </li>
                 {links.map(link => {
                     return (
                         <li key={link.to}>

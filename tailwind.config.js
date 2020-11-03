@@ -9,13 +9,13 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                "blue-dark": "#152036",
+                blue: "#1B2A47",
+                grey: "#4b566c",
                 snow: "#FCF7F8",
-                "oxford-blue": "#0B132B",
-                "space-cadet": "#1C2541",
-                independence: "#3A506B",
-                "mikado-yellow": "#FFC300",
-                "blue-green": "#5BC0BE",
-                gray: "#CED4DA"
+                yellow: "#FFC300",
+                orange: "#f5993b",
+                pink: "#f0588b"
             }
         }
     },

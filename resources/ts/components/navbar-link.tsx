@@ -16,9 +16,10 @@ function NavbarLink({ text, to, icon, selected }: Props) {
         <Link
             to={to}
             className={clsx(
-                "flex flex-row space-x-2 font-medium text-snow p-2 rounded-lg",
+                "flex flex-row space-x-2 font-bold text-sm px-2 py-2 rounded-l-md",
                 {
-                    "bg-mikado-yellow text-space-cadet": selected
+                    "bg-yellow text-blue": selected,
+                    "text-snow": !selected
                 }
             )}
         >
