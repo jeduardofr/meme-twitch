@@ -11,7 +11,9 @@ import {
     faImage,
     faPlusCircle,
     faEllipsisV,
-    faTrash
+    faTrash,
+    faKey,
+    faCrown
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -26,5 +28,7 @@ library.add(
     faImage,
     faPlusCircle,
     faEllipsisV,
-    faTrash
+    faTrash,
+    faKey,
+    faCrown
 );
