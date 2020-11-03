@@ -34,11 +34,10 @@ export default function useCategory() {
     async function createCategory(body: CategoryForm) {
         const formData = new FormData();
         formData.append("name", body.name);
-        if (body.type === "url") {
-            formData.append("url", body.url);
-        } else {
-            formData.append("thumbnail", body.file[0]);
-        }
+        formData.append(
+            "thumbnail",
+            body.type === "url" ? body.url : body.file[0]
+        );
 
         const category = await usePostRequest("/categories", {
             headers: {

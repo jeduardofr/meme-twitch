@@ -18,7 +18,7 @@ function NavbarLink({ text, to, icon, selected }: Props) {
             className={clsx(
                 "flex flex-row space-x-2 font-medium text-snow p-2 rounded-lg",
                 {
-                    "bg-space-cadet": selected
+                    "bg-mikado-yellow text-space-cadet": selected
                 }
             )}
         >

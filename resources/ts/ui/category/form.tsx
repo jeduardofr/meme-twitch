@@ -31,17 +31,22 @@ const schema = yup.object().shape(
 type FormProps = { defaultValues?: CategoryForm };
 
 function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
-    const { register, handleSubmit, errors, getValues } = useForm<CategoryForm>(
-        {
-            resolver: yupResolver(schema),
-            defaultValues
-        }
-    );
+    const { register, handleSubmit, errors, getValues, reset } = useForm<
+        CategoryForm
+    >({
+        resolver: yupResolver(schema),
+        defaultValues
+    });
     const { createCategory } = useCategory();
     const [type, setType] = useState<ThumbnailType>("url");
 
+    function onSubmit(data: CategoryForm) {
+        createCategory(data);
+        reset({});
+    }
+
     return (
-        <form onSubmit={handleSubmit(createCategory)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <Input
                 ref={register}
                 name="name"
