@@ -7,7 +7,6 @@ import Home from "./pages/home";
 import CategoryList from "./pages/category-list";
 import SignIn from "./pages/sign-in";
 import NotFound from "./pages/not-found";
-
 import SoundList from "./pages/sound-list";
 
 import NotificationWrapper from "./ui/notification/notification-wrapper";
@@ -27,13 +26,8 @@ function App() {
                                 component={CategoryList}
                             />
                             <Route exact path="/sign-in" component={SignIn} />
-<<<<<<< HEAD
-                            <Route exact path="/audios" component={Audios} />
                             <Route component={NotFound} />
-=======
-
                             <Route exact path="/sounds" component={SoundList} />
->>>>>>> 0d875e8... sounds-semi-conected
                         </Switch>
                     </div>
 

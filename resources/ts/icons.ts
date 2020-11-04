@@ -7,25 +7,15 @@ import {
     faSignInAlt,
     faSignOutAlt,
     faBars,
-<<<<<<< HEAD
     faPencilAlt,
     faImage,
     faPlusCircle,
     faEllipsisV,
     faTrash,
     faKey,
-    faCrown
-=======
-    faKey,
     faCrown,
-    faPencilAlt,
-    faImage,
-    faPlusCircle,
     faPlayCircle
->>>>>>> 0d875e8... sounds-semi-conected
 } from "@fortawesome/free-solid-svg-icons";
-
-import { faPlayCircle } from "@fortawesome/fontawesome-free-regular";
 
 library.add(
     faTimes,
@@ -38,12 +28,9 @@ library.add(
     faPencilAlt,
     faImage,
     faPlusCircle,
-<<<<<<< HEAD
     faEllipsisV,
     faTrash,
     faKey,
-    faCrown
-=======
+    faCrown,
     faPlayCircle
->>>>>>> 0d875e8... sounds-semi-conected
 );
