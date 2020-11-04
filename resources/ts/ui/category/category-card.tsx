@@ -1,5 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import useCategory, { Category } from "../../hooks/category.hook";
+import CardMenu from "../card-menu";
 
 type Props = {
     category: Category;
@@ -7,21 +9,29 @@ type Props = {
 
 function CategoryCard({ category }: Props) {
     const { deleteCategory } = useCategory();
+    const history = useHistory();
+
+    function onEdit() {
+        history.push(`/categories/edit/${category.id}`);
+    }
+
+    function onRemove() {
+        // @@@ Add alert to make sure users wants to delete
+        deleteCategory(category.id);
+    }
 
     return (
-        <button
-            className="relative col-span-2 square"
-            onClick={() => deleteCategory(category.id)}
+        <div
+            className="relative col-span-2 square rounded-tl-3xl rounded-br-3xl bg-center bg-cover"
+            style={{
+                backgroundImage: `url(${category.url})`
+            }}
         >
-            <img
-                className="absolute inset-0 z-10 object-cover w-full h-full rounded-tl-3xl rounded-br-3xl"
-                src={category.url}
-                alt={category.name}
-            />
-            <span className="absolute inset-0 z-20 flex items-center justify-center w-full h-full bg-black bg-opacity-50 text-snow rounded-tl-3xl rounded-br-3xl">
+            <CardMenu onEdit={onEdit} onRemove={onRemove} />
+            <span className="absolute inset-0 z-20 flex rounded-tl-3xl rounded-br-3xl items-center justify-center w-full h-full bg-black bg-opacity-50 text-snow">
                 {category.name}
             </span>
-        </button>
+        </div>
     );
 }
 

@@ -9,7 +9,9 @@ import {
     faBars,
     faPencilAlt,
     faImage,
-    faPlusCircle
+    faPlusCircle,
+    faEllipsisV,
+    faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -22,5 +24,7 @@ library.add(
     faBars,
     faPencilAlt,
     faImage,
-    faPlusCircle
+    faPlusCircle,
+    faEllipsisV,
+    faTrash
 );
