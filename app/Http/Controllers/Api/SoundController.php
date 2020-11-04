@@ -62,6 +62,8 @@ class SoundController extends Controller
         $sound->audio = $audio->name;
         $sound->audio_mime_type = $audio->mime_type;
 
+        $sound->keyword = $request->keyword;
+
         $sound->save();
 
         return (new SoundResource($sound))
