@@ -35,7 +35,7 @@ function NotificationCard({ notification }: Props) {
 
     return (
         <div
-            className="w-full rounded-md p-4 bg-snow"
+            className="w-full rounded-md p-4 bg-white"
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >

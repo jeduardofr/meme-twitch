@@ -25,7 +25,7 @@ function Sidebar() {
                 <button
                     onClick={() => setOpen(!open)}
                     className={clsx({
-                        "text-snow": !open,
+                        "text-white": !open,
                         "text-blue-green": open
                     })}
                 >

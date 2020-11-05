@@ -19,7 +19,7 @@ function NavbarLink({ text, to, icon, selected }: Props) {
                 "flex flex-row space-x-2 font-bold text-sm px-2 py-2 rounded-l-md",
                 {
                     "bg-yellow text-blue": selected,
-                    "text-snow": !selected
+                    "text-white": !selected
                 }
             )}
         >

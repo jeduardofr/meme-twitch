@@ -14,10 +14,10 @@ function CardMenu({ onEdit, onRemove }: CardMenuProps) {
             <Menu>
                 {({ open }) => (
                     <>
-                        <Menu.Button className="inline-flex justify-center w-full p-1 text-sm font-medium text-gray-700 transition duration-150 ease-in-out">
+                        <Menu.Button className="inline-flex justify-center w-full p-1 text-sm font-medium transition duration-150 ease-in-out">
                             <FontAwesomeIcon
                                 icon="ellipsis-v"
-                                className="text-snow"
+                                className="text-white hover:text-light-purple"
                             />
                         </Menu.Button>
                         <Transition
@@ -31,7 +31,7 @@ function CardMenu({ onEdit, onRemove }: CardMenuProps) {
                         >
                             <Menu.Items
                                 static
-                                className="absolute right-0 w-32 mt-2 origin-top-right bg-white rounded-md shadow-lg outline-none"
+                                className="absolute right-0 w-32 mt-2 origin-top-right bg-blue-dark rounded-md shadow-lg outline-none"
                             >
                                 <div className="py-1">
                                     <Menu.Item>
@@ -39,10 +39,10 @@ function CardMenu({ onEdit, onRemove }: CardMenuProps) {
                                             <a
                                                 onClick={onEdit}
                                                 className={clsx(
-                                                    "flex items-center w-full px-4 py-2 text-sm leading-5 text-left space-x-2 hover:cursor-pointer",
+                                                    "flex items-center w-full px-4 py-2 text-sm leading-5 text-left space-x-2",
                                                     {
-                                                        "bg-gray-100 text-gray-900": active,
-                                                        "text-gray-700": !active
+                                                        "bg-blue text-white": active,
+                                                        "text-white": !active
                                                     }
                                                 )}
                                             >
@@ -59,8 +59,8 @@ function CardMenu({ onEdit, onRemove }: CardMenuProps) {
                                                 className={clsx(
                                                     "flex items-center w-full px-4 py-2 text-sm leading-5 text-left space-x-2 hover:cursor-pointer",
                                                     {
-                                                        "bg-gray-100 text-gray-900": active,
-                                                        "text-gray-700": !active
+                                                        "bg-blue text-white": active,
+                                                        "text-white": !active
                                                     }
                                                 )}
                                             >

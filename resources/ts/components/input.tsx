@@ -18,7 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <div className="flex flex-row w-full">
                 <input
                     className={clsx(
-                        "form-input block w-full border-none bg-independence text-snow focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
+                        "form-input block w-full border-none bg-independence text-white focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
                         {
                             "border-mikado-yellow border": errors
                         }
@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 </div>
             </div>
             {errors && (
-                <p className="text-snow text-sm font-medium mt-2">
+                <p className="text-white text-sm font-medium mt-2">
                     {errors.message}
                 </p>
             )}

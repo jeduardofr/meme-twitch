@@ -6,7 +6,7 @@ type ButtonProps = React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
 > & {
-    icon: IconProp;
+    icon: IconProp | null;
     text: string;
 };
 
@@ -17,7 +17,7 @@ function Button({ text, icon, ...props }: ButtonProps) {
             className="bg-mikado-yellow px-6 py-2 text-independence rounded-2xl font-bold space-x-2 shadown-lg"
         >
             <span>{text}</span>
-            <FontAwesomeIcon className="text-lg" icon={icon} />
+            {icon && <FontAwesomeIcon className="text-lg" icon={icon} />}
         </button>
     );
 }
