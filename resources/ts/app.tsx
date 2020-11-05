@@ -31,9 +31,9 @@ function App() {
                                 path="/categories/form/:id?"
                                 component={CategoryForm}
                             />
+                            <Route exact path="/sounds" component={SoundList} />
                             <Route exact path="/sign-in" component={SignIn} />
                             <Route component={NotFound} />
-                            <Route exact path="/sounds" component={SoundList} />
                         </Switch>
                     </div>
 

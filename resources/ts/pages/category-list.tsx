@@ -19,7 +19,7 @@ function CategoryList() {
                 </h1>
                 <Link
                     to="/categories/form"
-                    className="px-6 py-2 text-blue bg-yellow rounded-2xl font-bold space-x-2 hover:shadow-lg"
+                    className="px-6 py-2 text-blue bg-yellow rounded-md font-bold space-x-2 hover:shadow-lg"
                 >
                     <FontAwesomeIcon icon="plus-circle" />
                     <span>Agregar</span>

@@ -1,81 +1,60 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import schema from "../ui/category/validation";
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import useCategory, {
     CategoryForm,
     ThumbnailType
 } from "../hooks/category.hook";
-import Input from "../components/input";
-import Select from "../components/select";
-import Button from "../components/button";
+import Form from "../ui/category/form";
 
-type FormProps = { defaultValues?: CategoryForm };
+function CategoryForm() {
+    const params = useParams<{ id: string | null }>();
+    const history = useHistory();
+    const { data, error, createCategory } = useCategory();
 
-function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
-    const { register, handleSubmit, errors, getValues, reset } = useForm<
-        CategoryForm
-    >({
-        resolver: yupResolver(schema),
-        defaultValues
-    });
-    const { createCategory } = useCategory();
-    const [type, setType] = useState<ThumbnailType>("url");
+    const [loading, setLoading] = useState(true);
+    const [defaultValues, setDefaultValues] = useState({} as CategoryForm);
 
-    function onSubmit(data: CategoryForm) {
-        createCategory(data);
-        reset({});
-    }
+    useEffect(() => {
+        if (!data) return;
+
+        if (params.id) {
+            const category = data.find(c => c.id === parseInt(params.id, 10));
+            // Category not found
+            if (!category) {
+                history.push("/categories");
+                return;
+            }
+
+            const { name, url, mimeType } = category;
+            setDefaultValues({
+                name,
+                url,
+                file: null,
+                type: (mimeType ? "file" : "url") as ThumbnailType
+            });
+        } else {
+            setDefaultValues({
+                type: "url" as ThumbnailType,
+                name: "",
+                url: "",
+                file: null
+            });
+        }
+
+        setLoading(false);
+    }, [data]);
+
+    if (loading) return <h1>Loading</h1>;
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-                ref={register}
-                name="name"
-                id="name"
-                placeholder="Nombre"
-                errors={errors.name}
-                icon="pencil-alt"
-            />
-            <div className="flex flex-col md:flex-row mt-4 space-y-4 md:space-x-4 md:space-y-0">
-                <div>
-                    <Select
-                        name="type"
-                        ref={register}
-                        options={[
-                            { label: "URL", value: "url" },
-                            { label: "Imagen local", value: "file" }
-                        ]}
-                        onChange={() => setType(getValues("type"))}
-                    />
-                </div>
-                {type === "url" && (
-                    <Input
-                        ref={register}
-                        name="url"
-                        id="url"
-                        placeholder="URL de imagen"
-                        errors={errors.url}
-                        icon="image"
-                    />
-                )}
-                {type === "file" && (
-                    <Input
-                        ref={register}
-                        name="file"
-                        id="file"
-                        placeholder="Archivo"
-                        type="file"
-                        errors={errors.file}
-                        icon="image"
-                    />
-                )}
-            </div>
-            <div className="text-right mt-4">
-                <Button text="Agregar" icon="plus-circle" />
-            </div>
-        </form>
+        <div className="w-full px-8">
+            <h1 className="text-5xl text-light-purple font-bold mt-4">
+                {params.id ? "Editar" : "Agregar"} Categoría
+            </h1>
+
+            <Form defaultValues={defaultValues} />
+        </div>
     );
 }
 
-export default Form;
+export default CategoryForm;
