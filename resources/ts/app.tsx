@@ -5,6 +5,7 @@ import store from "./store";
 
 import Home from "./pages/home";
 import CategoryList from "./pages/category-list";
+import CategoryForm from "./pages/category-form";
 import SignIn from "./pages/sign-in";
 import NotFound from "./pages/not-found";
 import SoundList from "./pages/sound-list";
@@ -25,8 +26,13 @@ function App() {
                                 path="/categories"
                                 component={CategoryList}
                             />
-                            <Route exact path="/sign-in" component={SignIn} />
+                            <Route
+                                exact
+                                path="/categories/form/:id?"
+                                component={CategoryForm}
+                            />
                             <Route exact path="/sounds" component={SoundList} />
+                            <Route exact path="/sign-in" component={SignIn} />
                             <Route component={NotFound} />
                         </Switch>
                     </div>

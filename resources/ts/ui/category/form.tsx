@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import schema from "./validation";
 import useCategory, {
     CategoryForm,
     ThumbnailType
@@ -10,43 +10,22 @@ import Input from "../../components/input";
 import Select from "../../components/select";
 import Button from "../../components/button";
 
-const schema = yup.object().shape(
-    {
-        name: yup.string().required("El nombre es obligatorio"),
-        url: yup.string().when(["file"], {
-            is: file => !file,
-            then: yup
-                .string()
-                .required("La URL es obligatoria")
-                .url("La URL no tiene un formato válido")
-        }),
-        file: yup.mixed().when("url", {
-            is: url => !url,
-            then: yup.mixed().required("La imagen es obligatoria")
-        })
-    },
-    [["file", "url"]]
-);
+type FormProps = {
+    defaultValues?: CategoryForm;
+    onSubmit: (data: CategoryForm) => void;
+};
 
-type FormProps = { defaultValues?: CategoryForm };
-
-function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
+function Form({ defaultValues, onSubmit }: FormProps) {
     const { register, handleSubmit, errors, getValues, reset } = useForm<
         CategoryForm
     >({
         resolver: yupResolver(schema),
         defaultValues
     });
-    const { createCategory } = useCategory();
-    const [type, setType] = useState<ThumbnailType>("url");
-
-    function onSubmit(data: CategoryForm) {
-        createCategory(data);
-        reset({});
-    }
+    const [type, setType] = useState<ThumbnailType>(defaultValues.type);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 ref={register}
                 name="name"
@@ -90,7 +69,7 @@ function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
                 )}
             </div>
             <div className="text-right mt-4">
-                <Button text="Agregar" icon="plus-circle" />
+                <Button text="Guardar" icon="save" />
             </div>
         </form>
     );

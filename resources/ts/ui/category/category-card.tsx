@@ -12,7 +12,7 @@ function CategoryCard({ category }: Props) {
     const history = useHistory();
 
     function onEdit() {
-        history.push(`/categories/edit/${category.id}`);
+        history.push(`/categories/form/${category.id}`);
     }
 
     function onRemove() {
@@ -28,7 +28,7 @@ function CategoryCard({ category }: Props) {
             }}
         >
             <CardMenu onEdit={onEdit} onRemove={onRemove} />
-            <span className="absolute inset-0 z-20 flex rounded-tl-3xl rounded-br-3xl items-center justify-center w-full h-full bg-black bg-opacity-50 text-snow">
+            <span className="absolute inset-0 z-20 flex rounded-tl-3xl rounded-br-3xl items-center justify-center w-full h-full bg-black bg-opacity-75 text-white">
                 {category.name}
             </span>
         </div>

@@ -14,7 +14,8 @@ import {
     faTrash,
     faKey,
     faCrown,
-    faPlayCircle
+    faPlayCircle,
+    faSave
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -32,5 +33,6 @@ library.add(
     faTrash,
     faKey,
     faCrown,
-    faPlayCircle
+    faPlayCircle,
+    faSave
 );

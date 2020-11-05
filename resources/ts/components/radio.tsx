@@ -10,7 +10,7 @@ type InputProps = React.DetailedHTMLProps<
 const Radio = React.forwardRef<HTMLInputElement, InputProps>(
     ({ text, id, ...props }, ref) => (
         <div>
-            <label htmlFor={id} className="text-snow">
+            <label htmlFor={id} className="text-white">
                 {text}
             </label>
             <input ref={ref} {...props} />
