@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useDeleteRequest, useGetRequest, usePostRequest } from "../utils/api";
-import { useStoreActions } from "./store";
+import { useStoreActions } from "./store.hook";
 
 export interface Sound {
     id: number;

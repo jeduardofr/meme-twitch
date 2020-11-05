@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Notification, Level } from "../../store/notification";
-import { useStoreActions } from "../../hooks/store";
+import { useStoreActions } from "../../hooks/store.hook";
 
 interface Props {
     notification: Notification;
@@ -35,18 +35,17 @@ function NotificationCard({ notification }: Props) {
 
     return (
         <div
-            className="w-full rounded-md p-4 bg-white"
+            className="w-full p-4"
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            <div className="flex flex-col flex-1">
+            <div className="flex justify-between flex-row">
+                <span className="text-sm">{notification.message}</span>
                 <div className="flex flex-row justify-between items-center">
-                    <p className="font-medium">{notification.title || ""}</p>
                     <button onClick={onClick}>
                         <FontAwesomeIcon icon="times" />
                     </button>
                 </div>
-                <span className="mt-2 text-sm">{notification.message}</span>
             </div>
         </div>
     );

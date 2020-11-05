@@ -5,7 +5,6 @@ export type Level = "error" | "success";
 export interface Notification {
     id: number;
     level: Level;
-    title?: string;
     message: string;
     time: number;
 }

@@ -49,8 +49,8 @@ function CategoryForm() {
             updateCategory(parseInt(params.id, 10), data);
         } else {
             createCategory(data);
+            history.push("/categories");
         }
-        history.push("/categories");
     }
 
     if (loading) return <h1>Loading</h1>;

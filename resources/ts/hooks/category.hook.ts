@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useDeleteRequest, useGetRequest, usePostRequest } from "../utils/api";
-import { useStoreActions } from "./store";
+import { useStoreActions } from "./store.hook";
 
 export interface Category {
     id: number;
@@ -48,7 +48,6 @@ export default function useCategory() {
 
         mutate([...data, category]);
         addNotification({
-            title: "Categoría",
             message: "Categoría agregada exitosamente",
             time: 3000,
             level: "success"
@@ -82,7 +81,6 @@ export default function useCategory() {
         );
 
         addNotification({
-            title: "Categoría",
             message: "Categoría actualizada exitosamente",
             time: 3000,
             level: "success"
