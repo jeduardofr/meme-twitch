@@ -10,25 +10,25 @@ import Input from "../../components/input";
 import Select from "../../components/select";
 import Button from "../../components/button";
 
-type FormProps = { defaultValues?: CategoryForm };
+type FormProps = {
+    defaultValues?: CategoryForm;
+    onSubmit: (data: CategoryForm) => void;
+};
 
-function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
+function Form({
+    defaultValues = { type: "url" } as CategoryForm,
+    onSubmit
+}: FormProps) {
     const { register, handleSubmit, errors, getValues, reset } = useForm<
         CategoryForm
     >({
         resolver: yupResolver(schema),
         defaultValues
     });
-    const { createCategory } = useCategory();
     const [type, setType] = useState<ThumbnailType>("url");
 
-    function onSubmit(data: CategoryForm) {
-        createCategory(data);
-        reset({});
-    }
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 ref={register}
                 name="name"
@@ -72,7 +72,7 @@ function Form({ defaultValues = { type: "url" } as CategoryForm }: FormProps) {
                 )}
             </div>
             <div className="text-right mt-4">
-                <Button text="Agregar" icon="plus-circle" />
+                <Button text="Guardar" icon="save" />
             </div>
         </form>
     );

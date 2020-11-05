@@ -18,15 +18,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <div className="flex flex-row w-full">
                 <input
                     className={clsx(
-                        "form-input block w-full border-none bg-independence text-white focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
+                        "form-input block w-full bg-blue-dark text-white border border-transparent focus:border-transparent focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
                         {
-                            "border-mikado-yellow border": errors
+                            "border-yellow": errors
                         }
                     )}
                     ref={ref}
                     {...props}
                 />
-                <div className="bg-mikado-yellow text-independence rounded-r-md flex justify-center items-center px-3">
+                <div className="bg-yellow text-blue rounded-r-md flex justify-center items-center px-3">
                     <FontAwesomeIcon icon={icon} />
                 </div>
             </div>

@@ -52,7 +52,10 @@ function CategoryForm() {
                 {params.id ? "Editar" : "Agregar"} Categoría
             </h1>
 
-            <Form defaultValues={defaultValues} />
+            <Form
+                onSubmit={params.id ? createCategory : createCategory}
+                defaultValues={defaultValues}
+            />
         </div>
     );
 }
