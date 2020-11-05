@@ -18,27 +18,92 @@ export type ThumbnailType = "url" | "file";
 
 export type SoundForm = {
     keyword: string;
-    audioUrl: string;
-    audioMimeType: string;
-    thumbnail: FileList;
+    author: string;
+    audioUrl: FileList;
+    // audioType: string;
     thumbnailUrl: string;
-    thumbnailMimeType: ThumbnailType;
+    thumbnail: FileList;
+    thumbnailType: ThumbnailType;
 };
 
-async function createCategory(body: SoundForm) {
-    const formData = new FormData();
-    formData.append("keyword", body.keyword);
-    formData.append(
-        "thumbnail",
-        body.thumbnailMimeType === "url" ? body.thumbnailUrl : body.thumbnail[0]
-    );
-}
-
 export default function useSound() {
+    const addNotification = useStoreActions(
+        state => state.notification.addNotification
+    );
+
     const { data, error, mutate } = useSWR<Sound[]>("/sounds", useGetRequest);
+
+    async function createSound(body: SoundForm) {
+        const formData = new FormData();
+        formData.append("keyword", body.keyword);
+        formData.append("author", body.author);
+        formData.append("audio", body.audioUrl[0]);
+        formData.append(
+            "thumbnail",
+            body.thumbnailType === "url" ? body.thumbnailUrl : body.thumbnail[0]
+        );
+
+        const sound = await usePostRequest("/sounds", {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: formData
+        });
+
+        mutate([...data, sound]);
+        addNotification({
+            title: "Audio",
+            message: "Audio agregado exitosamente",
+            time: 3000,
+            level: "success"
+        });
+    }
+
+    async function updateSound(id: number, body: SoundForm) {
+        const formData = new FormData();
+        formData.append("keyword", body.keyword);
+        formData.append("audio", body.audioUrl[0]);
+        formData.append(
+            "thumbnail",
+            body.thumbnailType === "url" ? body.thumbnailUrl : body.thumbnail[0]
+        );
+        formData.append("_method", "PUT");
+
+        const sound = await usePostRequest(`/sounds/${id}`, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: formData
+        });
+
+        mutate(
+            data.map(c => {
+                if (id === c.id) {
+                    return sound;
+                }
+
+                return c;
+            })
+        );
+
+        addNotification({
+            title: "Audio",
+            message: "Audio actualizado exitosamente",
+            time: 3000,
+            level: "success"
+        });
+    }
+
+    async function deleteSound(id: number) {
+        await useDeleteRequest(`/sounds/${id}`);
+        mutate(data.filter(c => c.id !== id));
+    }
 
     return {
         data,
-        error
+        error,
+        createSound,
+        updateSound,
+        deleteSound
     };
 }

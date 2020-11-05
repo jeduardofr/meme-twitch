@@ -10,6 +10,7 @@ import CategorySoundList from "./pages/category-sound-list";
 import SignIn from "./pages/sign-in";
 import NotFound from "./pages/not-found";
 import SoundList from "./pages/sound-list";
+import SoundForm from "./pages/sound-form";
 
 import NotificationWrapper from "./ui/notification/notification-wrapper";
 import Sidebar from "./ui/sidebar";
@@ -39,6 +40,12 @@ function App() {
                                 component={CategorySoundList}
                             />
                             <Route exact path="/sounds" component={SoundList} />
+                            <Route
+                                exact
+                                path="/sound/form/:id?"
+                                component={SoundForm}
+                            />
+
                             <Route exact path="/sign-in" component={SignIn} />
                             <Route component={NotFound} />
                         </Switch>
