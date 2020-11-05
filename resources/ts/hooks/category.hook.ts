@@ -55,6 +55,40 @@ export default function useCategory() {
         });
     }
 
+    async function updateCategory(id: number, body: CategoryForm) {
+        const formData = new FormData();
+        formData.append("name", body.name);
+        formData.append(
+            "thumbnail",
+            body.type === "url" ? body.url : body.file[0]
+        );
+        formData.append("_method", "PUT");
+
+        const category = await usePostRequest(`/categories/${id}`, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: formData
+        });
+
+        mutate(
+            data.map(c => {
+                if (id === c.id) {
+                    return category;
+                }
+
+                return c;
+            })
+        );
+
+        addNotification({
+            title: "Categoría",
+            message: "Categoría actualizada exitosamente",
+            time: 3000,
+            level: "success"
+        });
+    }
+
     async function deleteCategory(id: number) {
         await useDeleteRequest(`/categories/${id}`);
         mutate(data.filter(c => c.id !== id));
@@ -64,6 +98,7 @@ export default function useCategory() {
         data,
         error,
         createCategory,
-        deleteCategory
+        deleteCategory,
+        updateCategory
     };
 }

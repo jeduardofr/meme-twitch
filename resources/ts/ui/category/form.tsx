@@ -15,17 +15,14 @@ type FormProps = {
     onSubmit: (data: CategoryForm) => void;
 };
 
-function Form({
-    defaultValues = { type: "url" } as CategoryForm,
-    onSubmit
-}: FormProps) {
+function Form({ defaultValues, onSubmit }: FormProps) {
     const { register, handleSubmit, errors, getValues, reset } = useForm<
         CategoryForm
     >({
         resolver: yupResolver(schema),
         defaultValues
     });
-    const [type, setType] = useState<ThumbnailType>("url");
+    const [type, setType] = useState<ThumbnailType>(defaultValues.type);
 
     return (
         <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>

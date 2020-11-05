@@ -9,7 +9,7 @@ import Form from "../ui/category/form";
 function CategoryForm() {
     const params = useParams<{ id: string | null }>();
     const history = useHistory();
-    const { data, error, createCategory } = useCategory();
+    const { data, error, createCategory, updateCategory } = useCategory();
 
     const [loading, setLoading] = useState(true);
     const [defaultValues, setDefaultValues] = useState({} as CategoryForm);
@@ -44,6 +44,15 @@ function CategoryForm() {
         setLoading(false);
     }, [data]);
 
+    function onSubmit(data: CategoryForm) {
+        if (params.id) {
+            updateCategory(parseInt(params.id, 10), data);
+        } else {
+            createCategory(data);
+        }
+        history.push("/categories");
+    }
+
     if (loading) return <h1>Loading</h1>;
 
     return (
@@ -52,10 +61,7 @@ function CategoryForm() {
                 {params.id ? "Editar" : "Agregar"} Categoría
             </h1>
 
-            <Form
-                onSubmit={params.id ? createCategory : createCategory}
-                defaultValues={defaultValues}
-            />
+            <Form onSubmit={onSubmit} defaultValues={defaultValues} />
         </div>
     );
 }
