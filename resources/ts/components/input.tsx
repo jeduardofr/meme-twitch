@@ -18,9 +18,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <div className="flex flex-row w-full">
                 <input
                     className={clsx(
-                        "form-input block w-full bg-blue-dark text-white border border-transparent focus:border-transparent focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
+                        "form-input block w-full bg-blue-dark text-white border-2 border-transparent focus:border-transparent focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
                         {
-                            "border-yellow": errors
+                            "border-pink": errors
                         }
                     )}
                     ref={ref}

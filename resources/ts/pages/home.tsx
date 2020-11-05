@@ -1,5 +1,6 @@
 import React from "react";
 import { useStoreActions } from "../hooks/store.hook";
+import Title from "../components/title";
 
 function App() {
     const addNotification = useStoreActions(
@@ -7,10 +8,8 @@ function App() {
     );
 
     return (
-        <div className="px-8">
-            <h1 className="mt-4 text-light-purple text-5xl font-bold">
-                Inicio
-            </h1>
+        <div className="px-8 mt-4">
+            <Title>Inicio</Title>
         </div>
     );
 }

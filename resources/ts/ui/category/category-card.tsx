@@ -1,5 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import clsx from "clsx";
+import { useHistory, Link } from "react-router-dom";
 import useCategory, { Category } from "../../hooks/category.hook";
 import CardMenu from "../card-menu";
 
@@ -20,17 +21,30 @@ function CategoryCard({ category }: Props) {
         deleteCategory(category.id);
     }
 
+    const borders = "rounded-tl-3xl rounded-br-3xl rounded-bl-md rounded-tr-md";
+
     return (
         <div
-            className="relative col-span-2 square rounded-tl-3xl rounded-br-3xl bg-center bg-cover"
+            className={clsx(
+                "relative col-span-2 square bg-center bg-cover",
+                borders
+            )}
             style={{
                 backgroundImage: `url(${category.url})`
             }}
         >
             <CardMenu onEdit={onEdit} onRemove={onRemove} />
-            <span className="absolute inset-0 z-20 flex rounded-tl-3xl rounded-br-3xl items-center justify-center w-full h-full bg-black bg-opacity-75 text-white">
-                {category.name}
-            </span>
+            <Link
+                to={`/categories/${category.id}`}
+                className={clsx(
+                    "absolute inset-0 z-20 flex items-center justify-center w-full h-full bg-black bg-opacity-50",
+                    borders
+                )}
+            >
+                <span className="text-white font-medium text-lg">
+                    {category.name}
+                </span>
+            </Link>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import store from "./store";
 import Home from "./pages/home";
 import CategoryList from "./pages/category-list";
 import CategoryForm from "./pages/category-form";
+import CategorySoundList from "./pages/category-sound-list";
 import SignIn from "./pages/sign-in";
 import NotFound from "./pages/not-found";
 import SoundList from "./pages/sound-list";
@@ -31,6 +32,11 @@ function App() {
                                 exact
                                 path="/categories/form/:id?"
                                 component={CategoryForm}
+                            />
+                            <Route
+                                exact
+                                path="/categories/:id"
+                                component={CategorySoundList}
                             />
                             <Route exact path="/sounds" component={SoundList} />
                             <Route exact path="/sign-in" component={SignIn} />

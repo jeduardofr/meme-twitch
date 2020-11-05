@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useCategory from "../hooks/category.hook";
 import CategoryCard from "../ui/category/category-card";
 import Form from "../ui/category/form";
+import Title from "../components/title";
 
 function CategoryList() {
     const { data, error } = useCategory();
@@ -14,12 +15,10 @@ function CategoryList() {
     return (
         <div className="w-full px-8">
             <div className="mt-4 flex flex-row justify-between items-center">
-                <h1 className="text-5xl text-light-purple font-bold">
-                    Categorías
-                </h1>
+                <Title>Categorías</Title>
                 <Link
                     to="/categories/form"
-                    className="px-6 py-2 text-blue bg-yellow rounded-md font-bold space-x-2 hover:shadow-lg"
+                    className="px-6 py-2 text-blue bg-yellow rounded-md font-bold space-x-2 hover:shadow-lg hover:bg-yellow-400 focus:bg-yellow-500"
                 >
                     <FontAwesomeIcon icon="plus-circle" />
                     <span>Agregar</span>
