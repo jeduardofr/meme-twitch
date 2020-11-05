@@ -17,7 +17,8 @@ function App() {
     return (
         <StoreProvider store={store}>
             <BrowserRouter>
-                <div className="container mx-auto relative bg-blue-dark flex flex-col-reverse md:flex-row space-x-0 pt-10">
+                <NotificationWrapper />
+                <div className="container mx-auto relative bg-blue-dark flex flex-col-reverse md:flex-row space-x-0 mt-12">
                     <div className="flex flex-1 bg-blue rounded-t-xl">
                         <Switch>
                             <Route exact path="/" component={Home} />
@@ -38,7 +39,6 @@ function App() {
                     </div>
 
                     <Sidebar />
-                    <NotificationWrapper />
                 </div>
             </BrowserRouter>
         </StoreProvider>

@@ -7,19 +7,10 @@ function App() {
     );
 
     return (
-        <div>
-            <button
-                className="mt-64"
-                onClick={() => {
-                    addNotification({
-                        message: "test",
-                        time: 2000,
-                        level: "success"
-                    });
-                }}
-            >
-                Home
-            </button>
+        <div className="px-8">
+            <h1 className="mt-4 text-light-purple text-5xl font-bold">
+                Inicio
+            </h1>
         </div>
     );
 }

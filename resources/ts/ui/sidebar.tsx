@@ -20,7 +20,7 @@ function Sidebar() {
     const { open, setOpen } = useMenu();
 
     return (
-        <nav className="bg-blue min-h-screen w-full md:w-64">
+        <nav className="bg-blue min-h-with-gap w-full md:w-64">
             <div className="px-4 text-right md:hidden">
                 <button
                     onClick={() => setOpen(!open)}
@@ -43,7 +43,7 @@ function Sidebar() {
                 leaveTo="opacity-0"
                 as="ul"
             >
-                <li>
+                <li className="relative square">
                     <Profile />
                 </li>
                 <li className="mt-4 px-4 text-grey font-bold text-xs uppercase tracking-widest py-3">

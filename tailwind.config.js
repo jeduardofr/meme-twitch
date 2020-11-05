@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
     future: {
         removeDeprecatedGapUtilities: true,
@@ -14,10 +16,26 @@ module.exports = {
                 grey: "#4b566c",
                 "light-purple": "#9BB1FF",
                 yellow: "#FFC300",
-                white: "#FCF7F8"
+                white: "#FCF7F8",
+                green: "#3DA35D",
+                pink: "#E56399"
             }
         }
     },
     variants: {},
-    plugins: [require("@tailwindcss/custom-forms")]
+    plugins: [
+        require("@tailwindcss/custom-forms"),
+        plugin(function({ addUtilities, addComponents, e, prefix, config }) {
+            const newHeights = {
+                ".min-h-with-gap": {
+                    "min-height": "calc(100vh - 48px)"
+                },
+                ".h-with-gap": {
+                    height: "calc(100vh - 48px)"
+                }
+            };
+
+            addUtilities(newHeights);
+        })
+    ]
 };
