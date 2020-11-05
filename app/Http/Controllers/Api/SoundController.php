@@ -18,13 +18,14 @@ class SoundController extends Controller
         $this->fileService = $fileService;
     }
 
+    // Read
     public function index()
     {
         //Necesita paginacion  es un desmadre
         return SoundResource::collection(Sound::all());
     }
 
-    // Donde se llama a la base de datos para mostrar
+    // Create
     public function store(SoundRequest $request)
     {
         if ($request->hasFile('thumbnail')) {
@@ -45,6 +46,7 @@ class SoundController extends Controller
         return new SoundResource($sound);
     }
 
+    // update
     public function update(SoundRequest $request, Sound $sound)
     {
         if ($request->hasFile('thumbnail')) {
@@ -71,6 +73,7 @@ class SoundController extends Controller
             ->setStatusCode(200);
     }
 
+    // Destroy
     public function destroy(Sound $sound)
     {
         $this->fileService->removeIfExists('public/images/' . $sound->thumbnail);

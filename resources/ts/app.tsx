@@ -16,8 +16,8 @@ function App() {
     return (
         <StoreProvider store={store}>
             <BrowserRouter>
-                <div className="container mx-auto relative bg-blue-dark flex flex-col-reverse md:flex-row space-x-0">
-                    <div className="flex flex-1 bg-blue">
+                <div className="container mx-auto relative bg-blue-dark flex flex-col-reverse md:flex-row space-x-0 pt-10">
+                    <div className="flex flex-1 bg-blue rounded-t-xl">
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route
@@ -26,8 +26,8 @@ function App() {
                                 component={CategoryList}
                             />
                             <Route exact path="/sign-in" component={SignIn} />
-                            <Route component={NotFound} />
                             <Route exact path="/sounds" component={SoundList} />
+                            <Route component={NotFound} />
                         </Switch>
                     </div>
 

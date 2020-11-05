@@ -9,9 +9,9 @@ function SoundList() {
     if (!data) return <p>Loading</p>;
 
     return (
-        <div>
+        <div className="p-10">
             {/* classname */}
-            <h1 className="text-4xl text-blue-green font-bold">Miedo</h1>
+            <h1 className="text-5xl text-snow font-bold">Miedo</h1>
             <div className="grid grid-cols-5 gap-6 w-full mt-4">
                 {data.map(sound => (
                     <Audio key={sound.id} sound={sound} />
