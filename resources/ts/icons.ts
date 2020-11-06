@@ -15,7 +15,9 @@ import {
     faKey,
     faCrown,
     faPlayCircle,
-    faSave
+    faSave,
+    faVolumeUp,
+    faCrosshairs
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -34,5 +36,7 @@ library.add(
     faKey,
     faCrown,
     faPlayCircle,
-    faSave
+    faSave,
+    faVolumeUp,
+    faCrosshairs
 );

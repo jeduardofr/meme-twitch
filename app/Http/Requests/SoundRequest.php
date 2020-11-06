@@ -23,8 +23,9 @@ class SoundRequest extends FormRequest
      */
     public function rules()
     {
+        // Hay que cambiar lo de unique para cuando se necesite editar
         return [
-            'keyword'   => 'required|max:20|min:4|unique:sounds',
+            'keyword'   => 'required|max:20|min:4',
             'audio'     => 'required',
             'thumbnail' => 'required',
         ];

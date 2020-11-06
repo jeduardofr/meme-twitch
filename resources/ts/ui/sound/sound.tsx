@@ -1,27 +1,43 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useSound, { Sound } from "../../hooks/sound.hook";
+import CardMenu from "../card-menu";
+import { useHistory } from "react-router-dom";
 
 type Props = {
     sound: Sound;
 };
 
 function Sound({ sound }: Props) {
+    const { deleteSound } = useSound();
+    const history = useHistory();
+
+    function onEdit() {
+        history.push(`/sounds/form/${sound.id}`);
+    }
+
+    function onRemove() {
+        deleteSound(sound.id);
+    }
+
     return (
         <div>
-            <div className="w-40 rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg cursor-pointer">
+            <div className="w-40 rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg cursor-pointer relative">
                 <div
                     className="w-40 h-40 bg-cover rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg relative"
                     style={{
                         backgroundImage: `url(${sound.thumbnailUrl}`
                     }}
                 >
+                    <CardMenu onEdit={onEdit} onRemove={onRemove}></CardMenu>
                     <div className="opacity-0 hover:opacity-75 bg-opacity-50 z-20 absolute inset-0 flex items-center justify-center bg-black rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg">
-                        <FontAwesomeIcon
-                            className="text-white mr-2"
-                            icon="play-circle"
-                            size="4x"
-                        />
+                        <button>
+                            <FontAwesomeIcon
+                                className="text-white mr-2"
+                                icon="play-circle"
+                                size="4x"
+                            />
+                        </button>
                     </div>
                 </div>
             </div>
@@ -34,7 +50,9 @@ function Sound({ sound }: Props) {
                         size="1x"
                     />
                     {/* <span className="text-white text-xl">Helloudar</span> */}
-                    <span className="text-white text-xl">{sound.keyword}</span>
+                    <span className="text-white text-base">
+                        {sound.keyword}
+                    </span>
                 </div>
                 {/* Author */}
                 <div className="flex flex-row items-center">

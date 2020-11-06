@@ -42,7 +42,12 @@ function App() {
                             <Route exact path="/sounds" component={SoundList} />
                             <Route
                                 exact
-                                path="/sound/form/:id?"
+                                path="/sounds/form/:id?"
+                                component={SoundForm}
+                            />
+                            <Route
+                                exact
+                                path="/sounds/form"
                                 component={SoundForm}
                             />
 

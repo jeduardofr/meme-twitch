@@ -11,6 +11,7 @@ import clsx from "clsx";
 const links: Omit<LinkProps, "selected">[] = [
     { to: "/", text: "Inicio", icon: "home" },
     { to: "/categories", text: "Categorías", icon: "tags" },
+    { to: "/sounds", text: "Trending", icon: "crosshairs" },
     { to: "/sign-in", text: "Iniciar Sesión", icon: "sign-out-alt" }
 ];
 

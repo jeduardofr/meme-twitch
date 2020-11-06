@@ -19,11 +19,10 @@ export type ThumbnailType = "url" | "file";
 export type SoundForm = {
     keyword: string;
     author: string;
-    audioUrl: FileList;
-    // audioType: string;
-    thumbnailUrl: string;
-    thumbnail: FileList;
-    thumbnailType: ThumbnailType;
+    audio: FileList;
+    url: string;
+    file: FileList;
+    type: ThumbnailType;
 };
 
 export default function useSound() {
@@ -37,10 +36,10 @@ export default function useSound() {
         const formData = new FormData();
         formData.append("keyword", body.keyword);
         formData.append("author", body.author);
-        formData.append("audio", body.audioUrl[0]);
+        formData.append("audio", body.audio[0]);
         formData.append(
             "thumbnail",
-            body.thumbnailType === "url" ? body.thumbnailUrl : body.thumbnail[0]
+            body.type === "url" ? body.url : body.file[0]
         );
 
         const sound = await usePostRequest("/sounds", {
@@ -62,10 +61,10 @@ export default function useSound() {
     async function updateSound(id: number, body: SoundForm) {
         const formData = new FormData();
         formData.append("keyword", body.keyword);
-        formData.append("audio", body.audioUrl[0]);
+        formData.append("audio", body.audio[0]);
         formData.append(
             "thumbnail",
-            body.thumbnailType === "url" ? body.thumbnailUrl : body.thumbnail[0]
+            body.type === "url" ? body.url : body.file[0]
         );
         formData.append("_method", "PUT");
 
@@ -81,7 +80,6 @@ export default function useSound() {
                 if (id === c.id) {
                     return sound;
                 }
-
                 return c;
             })
         );

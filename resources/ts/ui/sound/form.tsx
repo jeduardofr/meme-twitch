@@ -2,22 +2,19 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./validation";
-import useCategory, {
-    CategoryForm,
-    ThumbnailType
-} from "../../hooks/category.hook";
+import useSound, { SoundForm, ThumbnailType } from "../../hooks/sound.hook";
 import Input from "../../components/input";
 import Select from "../../components/select";
 import Button from "../../components/button";
 
 type FormProps = {
-    defaultValues?: CategoryForm;
-    onSubmit: (data: CategoryForm) => void;
+    defaultValues?: SoundForm;
+    onSubmit: (data: SoundForm) => void;
 };
 
 function Form({ defaultValues, onSubmit }: FormProps) {
     const { register, handleSubmit, errors, getValues, reset } = useForm<
-        CategoryForm
+        SoundForm
     >({
         resolver: yupResolver(schema),
         defaultValues
@@ -28,12 +25,34 @@ function Form({ defaultValues, onSubmit }: FormProps) {
         <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 ref={register}
-                name="name"
-                id="name"
-                placeholder="Nombre"
-                errors={errors.name}
-                icon="pencil-alt"
+                name="keyword"
+                id="keyword"
+                placeholder="keyword"
+                errors={errors.keyword}
+                icon="key"
             />
+
+            <div className="mt-4"></div>
+            <Input
+                ref={register}
+                name="author"
+                id="author"
+                placeholder="author"
+                errors={errors.author}
+                icon="crown"
+            />
+
+            <div className="mt-4"></div>
+            <Input
+                ref={register}
+                name="audio"
+                id="audio"
+                placeholder="audio"
+                type="file"
+                errors={errors.audio}
+                icon="volume-up"
+            />
+
             <div className="flex flex-col md:flex-row mt-4 space-y-4 md:space-x-4 md:space-y-0">
                 <div>
                     <Select

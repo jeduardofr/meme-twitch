@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useSound, { SoundForm, ThumbnailType } from "../hooks/sound.hook";
 import { useParams, useHistory } from "react-router-dom";
-import Form from "../ui/category/form";
+import Form from "../ui/sound/form";
 
 function SoundForm() {
     const params = useParams<{ id: string | null }>();
@@ -33,27 +33,26 @@ function SoundForm() {
             setDefaultValues({
                 keyword,
                 author,
-                thumbnailUrl,
-                audioUrl: null,
-                thumbnail: null,
-                thumbnailType: (thumbnailMimeType
-                    ? "url"
-                    : "file") as ThumbnailType
+                audio: null,
+                url: thumbnailUrl,
+                file: null,
+                type: (thumbnailMimeType ? "url" : "file") as ThumbnailType
             });
         } else {
             setDefaultValues({
                 keyword: "",
                 author: "",
-                thumbnailUrl: "",
-                audioUrl: null,
-                thumbnail: null,
-                thumbnailType: "thumbnailUrl" as ThumbnailType
+                url: "",
+                audio: null,
+                file: null,
+                type: "thumbnailUrl" as ThumbnailType
             });
         }
         setLoading(false);
     }, [data]);
 
     function onSubmit(data: SoundForm) {
+        console.log(data);
         if (params.id) {
             updateSound(parseInt(params.id, 10), data);
         } else {
@@ -70,7 +69,7 @@ function SoundForm() {
                 {params.id ? "Editar" : "Agregar"} Sonido
             </h1>
 
-            {/* <Form onSubmit={onSubmit} defaultValues={defaultValues} /> */}
+            <Form onSubmit={onSubmit} defaultValues={defaultValues} />
         </div>
     );
 }
