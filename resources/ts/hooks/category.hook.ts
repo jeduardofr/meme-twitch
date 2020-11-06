@@ -90,6 +90,11 @@ export default function useCategory() {
     async function deleteCategory(id: number) {
         await useDeleteRequest(`/categories/${id}`);
         mutate(data.filter(c => c.id !== id));
+        addNotification({
+            message: "Categoría eliminada exitosamente",
+            time: 3000,
+            level: "success"
+        });
     }
 
     return {

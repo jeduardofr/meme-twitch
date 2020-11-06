@@ -1,4 +1,5 @@
 import React from "react";
+import Title from "../components/title";
 import Audio from "../ui/sound/sound";
 import useSound from "../hooks/sound.hook";
 
@@ -9,9 +10,8 @@ function SoundList() {
     if (!data) return <p>Loading</p>;
 
     return (
-        <div className="p-10">
-            {/* classname */}
-            <h1 className="text-5xl text-snow font-bold">Miedo</h1>
+        <div className="mt-4 px-8">
+            <Title>Miedo</Title>
             <div className="grid grid-cols-5 gap-6 w-full mt-4">
                 {data.map(sound => (
                     <Audio key={sound.id} sound={sound} />

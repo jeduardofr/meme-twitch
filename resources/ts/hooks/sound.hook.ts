@@ -51,7 +51,6 @@ export default function useSound() {
 
         mutate([...data, sound]);
         addNotification({
-            title: "Audio",
             message: "Audio agregado exitosamente",
             time: 3000,
             level: "success"
@@ -85,7 +84,6 @@ export default function useSound() {
         );
 
         addNotification({
-            title: "Audio",
             message: "Audio actualizado exitosamente",
             time: 3000,
             level: "success"

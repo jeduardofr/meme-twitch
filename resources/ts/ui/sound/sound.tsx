@@ -29,7 +29,7 @@ function Sound({ sound }: Props) {
                         backgroundImage: `url(${sound.thumbnailUrl}`
                     }}
                 >
-                    <CardMenu onEdit={onEdit} onRemove={onRemove}></CardMenu>
+                    <CardMenu onEdit={onEdit} onRemove={onRemove} />
                     <div className="opacity-0 hover:opacity-75 bg-opacity-50 z-20 absolute inset-0 flex items-center justify-center bg-black rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg">
                         <button>
                             <FontAwesomeIcon
@@ -43,9 +43,9 @@ function Sound({ sound }: Props) {
             </div>
             <div>
                 {/* Keyword */}
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center space-x-2">
                     <FontAwesomeIcon
-                        className="text-white mr-2"
+                        className="text-white"
                         icon="key"
                         size="1x"
                     />
@@ -55,9 +55,9 @@ function Sound({ sound }: Props) {
                     </span>
                 </div>
                 {/* Author */}
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center space-x-2">
                     <FontAwesomeIcon
-                        className="text-white mr-2 text-xs"
+                        className="text-white text-xs"
                         icon="crown"
                     />
                     {/* <span className="text-white text-sm">AzzuBanana</span> */}
