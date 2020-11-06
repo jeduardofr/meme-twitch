@@ -41,7 +41,7 @@ function CategoryCard({ category }: Props) {
                     borders
                 )}
             >
-                <span className="text-white font-medium text-lg">
+                <span className="text-white font-medium text-lg text-center">
                     {category.name}
                 </span>
             </Link>
