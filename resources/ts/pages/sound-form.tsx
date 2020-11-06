@@ -45,7 +45,7 @@ function SoundForm() {
                 url: "",
                 audio: null,
                 file: null,
-                type: "thumbnailUrl" as ThumbnailType
+                type: "url"
             });
         }
         setLoading(false);
