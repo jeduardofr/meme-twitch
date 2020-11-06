@@ -27,7 +27,9 @@ Create `.env` file
 
     $ cp .env.example .env
 
-After this you should set the database credentials.
+After this you should set the database credentials. Also you should configure
+the `APP_URL` variable as well since the frontend depends on that variable to
+successfully make the requests to our API.
 
 Generate key for the application
 
@@ -46,6 +48,9 @@ Compile the front-end once
 
     $ npm run dev
 
-Start the local environment with hot reload
+Now, if you want to have hot reload for the frontend, you need to set the
+variable `MIX_API` with you local url without protocol. For example if your
+url is `http://mi-url-local.test` then the variable should be set to
+`mi-url-local.test`. After that you can run:
 
     $ npm run watch
