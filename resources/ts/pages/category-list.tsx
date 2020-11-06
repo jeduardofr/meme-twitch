@@ -13,8 +13,8 @@ function CategoryList() {
     if (!data) return <p>Loading</p>;
 
     return (
-        <div className="w-full px-8">
-            <div className="mt-4 flex flex-row justify-between items-center">
+        <div className="w-full px-4 md:px-8 pb-4">
+            <div className="mt-4 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <Title>Categorías</Title>
                 <Link
                     to="/categories/form"
@@ -24,7 +24,7 @@ function CategoryList() {
                     <span>Agregar</span>
                 </Link>
             </div>
-            <div className="grid grid-cols-12 gap-4 w-full mt-4">
+            <div className="grid grid-cols-12 gap-4 w-full mt-8">
                 {data.map(category => (
                     <CategoryCard key={category.id} category={category} />
                 ))}
