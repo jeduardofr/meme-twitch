@@ -26,7 +26,7 @@ function CategoryCard({ category }: Props) {
     return (
         <div
             className={clsx(
-                "relative col-span-2 square bg-center bg-cover",
+                "relative col-span-6 sm:col-span-4 lg:col-span-3 xl:col-span-2 square bg-center bg-cover",
                 borders
             )}
             style={{
