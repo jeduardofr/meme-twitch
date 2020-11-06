@@ -11,10 +11,10 @@ For [Docker](Docker.md).
 
 ### Full local installation
 
-- [Node](https://nodejs.org)
-- [Composer](https://getcomposer.org/download/)
-- [PHP](https://www.php.net/downloads.php)
-- [MySQL](https://dev.mysql.com/downloads/)
+-   [Node](https://nodejs.org)
+-   [Composer](https://getcomposer.org/download/)
+-   [PHP](https://www.php.net/downloads.php)
+-   [MySQL](https://dev.mysql.com/downloads/)
 
 ## Installation
 
@@ -42,7 +42,10 @@ Run migrations
 
     $ php artisan migrate
 
-Start local environment
+Compile the front-end once
+
+    $ npm run dev
+
+Start the local environment with hot reload
 
     $ npm run watch
-
