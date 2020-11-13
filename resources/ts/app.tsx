@@ -20,8 +20,8 @@ function App() {
         <StoreProvider store={store}>
             <BrowserRouter>
                 <NotificationWrapper />
-                <div className="container mx-auto relative bg-blue-dark flex flex-col-reverse md:flex-row space-x-0 mt-12">
-                    <div className="flex flex-1 bg-blue rounded-t-xl">
+                <div className="container mx-auto relative bg-blue-dark flex flex-col-reverse md:flex-row space-x-0 mt-12 min-h-with-gap">
+                    <div className="flex flex-1 bg-blue md:rounded-tl-xl">
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route

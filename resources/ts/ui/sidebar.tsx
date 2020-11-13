@@ -3,10 +3,10 @@ import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useMedia from "use-media";
 import { Transition } from "@headlessui/react";
+import clsx from "clsx";
 import NavbarLink, { Props as LinkProps } from "../components/navbar-link";
 import Profile from "../ui/profile";
 import useMenu from "../hooks/menu.hook";
-import clsx from "clsx";
 
 const links: Omit<LinkProps, "selected">[] = [
     { to: "/", text: "Inicio", icon: "home" },
@@ -21,14 +21,11 @@ function Sidebar() {
     const { open, setOpen } = useMenu();
 
     return (
-        <nav className="bg-blue min-h-with-gap w-full md:w-64">
-            <div className="px-4 text-right md:hidden">
+        <nav className="bg-blue md:min-h-with-gap rounded-t-xl md:rounded-tr-3xl w-full md:w-64">
+            <div className="px-4 text-right md:hidden mt-4">
                 <button
                     onClick={() => setOpen(!open)}
-                    className={clsx({
-                        "text-white": !open,
-                        "text-blue-green": open
-                    })}
+                    className="text-white focus:text-yellow"
                 >
                     <FontAwesomeIcon icon="bars" size="2x" />
                 </button>
@@ -43,9 +40,27 @@ function Sidebar() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
                 as="ul"
+                className={clsx({
+                    "fixed inset-0 bg-blue z-40 h-screen overflow-y-auto": !isLargerThanMd
+                })}
             >
-                <li className="relative square">
-                    <Profile />
+                <li className="relative flex justify-center md:justify-end">
+                    <div
+                        className={clsx("relative", {
+                            square: isLargerThanMd,
+                            "w-32 h-32 mt-4": !isLargerThanMd
+                        })}
+                    >
+                        <Profile />
+                    </div>
+                    {!isLargerThanMd && (
+                        <button
+                            className="text-white focus:text-yellow fixed top-0 right-0 mt-4 mr-4"
+                            onClick={() => setOpen(false)}
+                        >
+                            <FontAwesomeIcon icon="times" size="2x" />
+                        </button>
+                    )}
                 </li>
                 <li className="mt-4 px-4 text-grey font-bold text-xs uppercase tracking-widest py-3">
                     Opciones
