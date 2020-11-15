@@ -6,20 +6,13 @@ export type SignInForm = {
 };
 
 function useAuth() {
-    async function signIn(data: SignInForm): Promise<boolean> {
-        try {
-            const response = await usePostRequest("/auth/sign-in", {
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            return true;
-        } catch (err) {
-            console.log(err);
-            return false;
-        }
+    function signIn(data: SignInForm) {
+        return usePostRequest("/auth/sign-in", data, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json"
+            }
+        });
     }
 
     return {

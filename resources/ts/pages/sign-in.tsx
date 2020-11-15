@@ -7,6 +7,7 @@ import Button from "../components/button";
 import Title from "../components/title";
 import { useStoreActions } from "../hooks/store.hook";
 import useAuth, { SignInForm } from "../hooks/auth.hook";
+import useError from "../hooks/error.hook";
 
 const schema = yup.object().shape({
     email: yup.string().required("El correo electrónico es obligatorio"),
@@ -25,9 +26,15 @@ function SignIn() {
         resolver: yupResolver(schema)
     });
     const { signIn } = useAuth();
+    const { setFormErrors } = useError();
 
     async function onSubmit(data: SignInForm) {
-        const res = await signIn(data);
+        try {
+            const res = await signIn(data);
+            console.log(res.data);
+        } catch (err) {
+            setFormErrors(err.response.data, setError);
+        }
     }
 
     return (
