@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useDeleteRequest, useGetRequest, usePostRequest } from "../utils/api";
+import { useDeleteRequest, useFetcher, usePostRequest } from "../utils/api";
 import { useStoreActions } from "./store.hook";
 
 export interface Sound {
@@ -30,7 +30,7 @@ export default function useSound() {
         state => state.notification.addNotification
     );
 
-    const { data, error, mutate } = useSWR<Sound[]>("/sounds", useGetRequest);
+    const { data, error, mutate } = useSWR<Sound[]>("/sounds", useFetcher);
 
     async function createSound(body: SoundForm) {
         const formData = new FormData();
@@ -42,14 +42,13 @@ export default function useSound() {
             body.type === "url" ? body.url : body.file[0]
         );
 
-        const sound = await usePostRequest("/sounds", {
+        const sound = await usePostRequest("/sounds", formData, {
             headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            },
-            body: formData
+                "Content-Type": "multipart/form-data"
+            }
         });
 
-        mutate([...data, sound]);
+        mutate([...data, sound.data]);
         addNotification({
             message: "Audio agregado exitosamente",
             time: 3000,
@@ -67,17 +66,16 @@ export default function useSound() {
         );
         formData.append("_method", "PUT");
 
-        const sound = await usePostRequest(`/sounds/${id}`, {
+        const sound = await usePostRequest(`/sounds/${id}`, formData, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest"
-            },
-            body: formData
+            }
         });
 
         mutate(
             data.map(c => {
                 if (id === c.id) {
-                    return sound;
+                    return sound.data;
                 }
                 return c;
             })

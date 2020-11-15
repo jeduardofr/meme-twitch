@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useDeleteRequest, useGetRequest, usePostRequest } from "../utils/api";
+import { useDeleteRequest, useFetcher, usePostRequest } from "../utils/api";
 import { useStoreActions } from "./store.hook";
 
 export interface Category {
@@ -28,7 +28,7 @@ export default function useCategory() {
 
     const { data, error, mutate } = useSWR<Category[]>(
         "/categories",
-        useGetRequest
+        useFetcher
     );
 
     async function createCategory(body: CategoryForm) {
@@ -39,14 +39,13 @@ export default function useCategory() {
             body.type === "url" ? body.url : body.file[0]
         );
 
-        const category = await usePostRequest("/categories", {
+        const category = await usePostRequest("/categories", formData, {
             headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            },
-            body: formData
+                "Content-Type": "multipart/form-data"
+            }
         });
 
-        mutate([...data, category]);
+        mutate([...data, category.data]);
         addNotification({
             message: "Categoría agregada exitosamente",
             time: 3000,
@@ -63,17 +62,16 @@ export default function useCategory() {
         );
         formData.append("_method", "PUT");
 
-        const category = await usePostRequest(`/categories/${id}`, {
+        const category = await usePostRequest(`/categories/${id}`, formData, {
             headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            },
-            body: formData
+                "Content-Type": "multipart/form-data"
+            }
         });
 
         mutate(
             data.map(c => {
                 if (id === c.id) {
-                    return category;
+                    return category.data;
                 }
 
                 return c;

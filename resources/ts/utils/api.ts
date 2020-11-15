@@ -1,19 +1,26 @@
+import axios, { AxiosRequestConfig } from "axios";
+
 const baseURL = process.env.MIX_API;
 
 export function useGetRequest(endpoint: string) {
-    return fetch(`${baseURL}${endpoint}`).then(res => res.json());
+    return axios(`${baseURL}${endpoint}`);
 }
 
-export function usePostRequest(endpoint: string, config?: RequestInit) {
-    return fetch(`${baseURL}${endpoint}`, {
-        method: "POST",
-        ...config
-    }).then(res => res.json());
+export function useFetcher(endpoint: string) {
+    return useGetRequest(endpoint).then(res => res.data);
 }
 
-export function useDeleteRequest(endpoint: string, config?: RequestInit) {
-    return fetch(`${baseURL}${endpoint}`, {
-        method: "DELETE",
-        ...config
-    }).then(res => res.json());
+export function usePostRequest(
+    endpoint: string,
+    data: any,
+    config?: AxiosRequestConfig
+) {
+    return axios.post(`${baseURL}${endpoint}`, data, config);
+}
+
+export function useDeleteRequest(
+    endpoint: string,
+    config?: AxiosRequestConfig
+) {
+    return axios.delete(`${baseURL}${endpoint}`, config);
 }
