@@ -7,22 +7,24 @@ import clsx from "clsx";
 import NavbarLink, { Props as LinkProps } from "../components/navbar-link";
 import Profile from "../ui/profile";
 import useMenu from "../hooks/menu.hook";
+import { useStoreState, useStoreActions } from "../hooks/store.hook";
 
 const links: Omit<LinkProps, "selected">[] = [
     { to: "/", text: "Inicio", icon: "home" },
     { to: "/categories", text: "Categorías", icon: "tags" },
-    { to: "/sounds", text: "Trending", icon: "crosshairs" },
-    { to: "/sign-in", text: "Iniciar Sesión", icon: "sign-out-alt" }
+    { to: "/sounds", text: "Trending", icon: "crosshairs" }
 ];
 
 function Sidebar() {
+    const { isSignedIn } = useStoreState(state => state.auth);
+    const { setToken, setIsSignedIn } = useStoreActions(state => state.auth);
     const isLargerThanMd = useMedia({ minWidth: "768px" });
     const location = useLocation();
     const { open, setOpen } = useMenu();
 
     return (
-        <nav className="bg-blue md:min-h-with-gap rounded-t-xl md:rounded-tr-3xl w-full md:w-64">
-            <div className="px-4 text-right md:hidden mt-4">
+        <nav className="w-full bg-blue md:min-h-with-gap rounded-t-xl md:rounded-tr-3xl md:w-64">
+            <div className="px-4 mt-4 text-right md:hidden">
                 <button
                     onClick={() => setOpen(!open)}
                     className="text-white focus:text-yellow"
@@ -55,14 +57,14 @@ function Sidebar() {
                     </div>
                     {!isLargerThanMd && (
                         <button
-                            className="text-white focus:text-yellow fixed top-0 right-0 mt-4 mr-4"
+                            className="fixed top-0 right-0 mt-4 mr-4 text-white focus:text-yellow"
                             onClick={() => setOpen(false)}
                         >
                             <FontAwesomeIcon icon="times" size="2x" />
                         </button>
                     )}
                 </li>
-                <li className="mt-4 px-4 text-grey font-bold text-xs uppercase tracking-widest py-3">
+                <li className="px-4 py-3 mt-4 text-xs font-bold tracking-widest uppercase text-grey">
                     Opciones
                 </li>
                 {links.map(link => {
@@ -77,6 +79,38 @@ function Sidebar() {
                         </li>
                     );
                 })}
+                {isSignedIn && (
+                    <li>
+                        <NavbarLink
+                            to="/profile"
+                            text="Perfil"
+                            icon={"home"}
+                            selected={"/profile" === location.pathname}
+                        />
+                    </li>
+                )}
+                <li>
+                    {isSignedIn ? (
+                        <NavbarLink
+                            to="/sign-out"
+                            text="Cerrar Sesión"
+                            icon={"sign-out-alt"}
+                            selected={"/sign-out" === location.pathname}
+                            onClick={e => {
+                                e.preventDefault();
+                                setToken("");
+                                setIsSignedIn(false);
+                            }}
+                        />
+                    ) : (
+                        <NavbarLink
+                            to="/sign-in"
+                            text="Iniciar Sesión"
+                            icon={"sign-out-alt"}
+                            selected={"/sign-in" === location.pathname}
+                        />
+                    )}
+                </li>
             </Transition>
         </nav>
     );

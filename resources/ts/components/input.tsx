@@ -1,7 +1,7 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import clsx from "clsx";
 import React from "react";
+import clsx from "clsx";
 import { FieldError } from "react-hook-form";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type InputProps = React.DetailedHTMLProps<

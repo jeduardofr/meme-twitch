@@ -1,19 +1,20 @@
 import React from "react";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-export interface Props {
+export type Props = {
     text: string;
     to: string;
     icon: IconProp;
     selected: boolean;
-}
+} & LinkProps;
 
-function NavbarLink({ text, to, icon, selected }: Props) {
+function NavbarLink({ text, to, icon, selected, ...props }: Props) {
     return (
         <Link
+            {...props}
             to={to}
             className={clsx(
                 "flex flex-row space-x-2 font-bold text-sm px-2 py-2 md:rounded-l-md",

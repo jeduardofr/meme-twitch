@@ -1,4 +1,5 @@
-import { usePostRequest } from "../utils/api";
+import axios, { usePostRequest } from "../utils/api";
+import { useStoreActions } from "../hooks/store.hook";
 
 export type SignInForm = {
     email: string;
@@ -6,17 +7,36 @@ export type SignInForm = {
 };
 
 function useAuth() {
+    const { setToken, setIsSignedIn, setIsLoading } = useStoreActions(
+        state => state.auth
+    );
+
     function signIn(data: SignInForm) {
         return usePostRequest("/auth/sign-in", data, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-Type": "application/json"
             }
+        }).then(response => {
+            const { token } = response.data;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            setToken(token);
+            setIsSignedIn(true);
         });
     }
 
+    function loadConfig() {
+        const token = localStorage.getItem("token");
+        if (token) {
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            setToken(token);
+        }
+        setIsLoading(false);
+    }
+
     return {
-        signIn
+        signIn,
+        loadConfig
     };
 }
 
