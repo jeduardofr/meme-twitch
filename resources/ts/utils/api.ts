@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
-
-const baseURL = process.env.MIX_API;
+const instance = axios.create({ baseURL: process.env.MIX_API });
+// axios.defaults.baseURL = process.env.MIX_API;
 
 export function useGetRequest(endpoint: string) {
-    return axios(`${baseURL}${endpoint}`);
+    return instance.get(endpoint);
 }
 
 export function useFetcher(endpoint: string) {
@@ -15,12 +15,14 @@ export function usePostRequest(
     data: any,
     config?: AxiosRequestConfig
 ) {
-    return axios.post(`${baseURL}${endpoint}`, data, config);
+    return instance.post(endpoint, data, config);
 }
 
 export function useDeleteRequest(
     endpoint: string,
     config?: AxiosRequestConfig
 ) {
-    return axios.delete(`${baseURL}${endpoint}`, config);
+    return instance.delete(endpoint, config);
 }
+
+export default instance;

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Input from "../components/input";
 import Button from "../components/button";
 import Title from "../components/title";
-import { useStoreActions } from "../hooks/store.hook";
 import useAuth, { SignInForm } from "../hooks/auth.hook";
 import useError from "../hooks/error.hook";
 
@@ -15,23 +15,17 @@ const schema = yup.object().shape({
 });
 
 function SignIn() {
-    const {
-        register,
-        handleSubmit,
-        errors,
-        setError,
-        getValues,
-        reset
-    } = useForm<SignInForm>({
+    const { register, handleSubmit, errors, setError } = useForm<SignInForm>({
         resolver: yupResolver(schema)
     });
     const { signIn } = useAuth();
     const { setFormErrors } = useError();
+    const history = useHistory();
 
     async function onSubmit(data: SignInForm) {
         try {
-            const res = await signIn(data);
-            console.log(res.data);
+            await signIn(data);
+            history.push("/profile");
         } catch (err) {
             setFormErrors(err.response.data, setError);
         }

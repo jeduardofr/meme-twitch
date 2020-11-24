@@ -29,6 +29,7 @@ Route::post('auth/sign-up', [SignUpController::class, 'store']);
 Route::post('auth/sign-in', [SignInController::class, 'store']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/profile/me', [ProfileController::class, 'index']);
+    Route::get('/profile/sign-out', [ProfileController::class, 'destroy']);
 });
 
 Route::resource('sounds', SoundController::class)->except(['edit', 'show', 'create']);
