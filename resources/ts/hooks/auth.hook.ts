@@ -34,9 +34,17 @@ function useAuth() {
         setIsLoading(false);
     }
 
+    function cleanUpConfig() {
+        localStorage.removeItem("token");
+        delete axios.defaults.headers.common["Authorization"];
+        setToken("");
+        setIsSignedIn(false);
+    }
+
     return {
         signIn,
-        loadConfig
+        loadConfig,
+        cleanUpConfig
     };
 }
 

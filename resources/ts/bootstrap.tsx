@@ -14,8 +14,9 @@ function Bootstrap() {
         state => state.auth
     );
     const { setIsSignedIn, setUser } = useStoreActions(state => state.auth);
+    const { addNotification } = useStoreActions(state => state.notification);
     const { fetchProfile } = useUser();
-    const { loadConfig } = useAuth();
+    const { loadConfig, cleanUpConfig } = useAuth();
 
     useEffect(() => {
         loadConfig();
@@ -24,7 +25,17 @@ function Bootstrap() {
     useEffect(() => {
         if (isTokenSet) {
             setIsSignedIn(true);
-            fetchProfile().then(response => setUser(response.data));
+            fetchProfile()
+                .then(response => setUser(response.data))
+                .catch(_ => {
+                    cleanUpConfig();
+                    addNotification({
+                        time: 5000,
+                        level: "error",
+                        message:
+                            "Lo sentimos, necesitas volver a iniciar sesión."
+                    });
+                });
         }
     }, [isTokenSet]);
 

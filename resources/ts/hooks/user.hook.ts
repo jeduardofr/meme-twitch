@@ -5,8 +5,13 @@ function useUser() {
         return useGetRequest("/profile/me");
     }
 
+    function signOut() {
+        return useGetRequest("/profile/sign-out");
+    }
+
     return {
-        fetchProfile
+        fetchProfile,
+        signOut
     };
 }
 

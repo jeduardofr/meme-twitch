@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useCategory from "../hooks/category.hook";
 import CategoryCard from "../ui/category/category-card";
-import Form from "../ui/category/form";
 import Title from "../components/title";
 
 function CategoryList() {

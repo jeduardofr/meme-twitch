@@ -7,6 +7,7 @@ import clsx from "clsx";
 import NavbarLink, { Props as LinkProps } from "../components/navbar-link";
 import Profile from "../ui/profile";
 import useMenu from "../hooks/menu.hook";
+import useUser from "../hooks/user.hook";
 import { useStoreState, useStoreActions } from "../hooks/store.hook";
 
 const links: Omit<LinkProps, "selected">[] = [
@@ -21,6 +22,7 @@ function Sidebar() {
     const isLargerThanMd = useMedia({ minWidth: "768px" });
     const location = useLocation();
     const { open, setOpen } = useMenu();
+    const { signOut } = useUser();
 
     return (
         <nav className="w-full bg-blue md:min-h-with-gap rounded-t-xl md:rounded-tr-3xl md:w-64">
@@ -98,8 +100,10 @@ function Sidebar() {
                             selected={"/sign-out" === location.pathname}
                             onClick={e => {
                                 e.preventDefault();
-                                setToken("");
-                                setIsSignedIn(false);
+                                signOut().then(() => {
+                                    setToken("");
+                                    setIsSignedIn(false);
+                                });
                             }}
                         />
                     ) : (
