@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignInRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class SignInController extends Controller
@@ -22,12 +21,5 @@ class SignInController extends Controller
         $token = $user->createToken('spa');
 
         return response()->json([ 'token' => $token->plainTextToken ], 200);
-    }
-
-    public function destroy(Request $request)
-    {
-        $request->user()->tokens()->delete();
-
-        return response()->json(['success' => true], 200);
     }
 }

@@ -1,10 +1,6 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-    future: {
-        removeDeprecatedGapUtilities: true,
-        purgeLayersByDefault: true
-    },
     purge: {
         content: ["resources/views/**/*.php", "resources/ts/**/*.tsx"]
     },
@@ -16,7 +12,6 @@ module.exports = {
                 grey: "#4b566c",
                 "light-purple": "#9BB1FF",
                 yellow: {
-                    default: "#FFC300",
                     50: "#FFFCF2",
                     100: "#FFF9E6",
                     200: "#FFF0BF",
@@ -36,7 +31,6 @@ module.exports = {
     },
     variants: {},
     plugins: [
-        require("@tailwindcss/custom-forms"),
         plugin(function({ addUtilities, addComponents, e, prefix, config }) {
             const newHeights = {
                 ".min-h-with-gap": {

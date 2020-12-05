@@ -43,7 +43,7 @@ function Bootstrap() {
 
     return (
         <BrowserRouter>
-            <div className="container relative flex flex-col-reverse mx-auto mt-12 bg-blue-dark md:flex-row space-x-0 min-h-with-gap">
+            <div className="container max-w-screen-2xl relative flex flex-col-reverse mx-auto mt-12 bg-blue-dark md:flex-row space-x-0 min-h-with-gap">
                 <div className="flex flex-1 bg-blue md:rounded-tl-xl">
                     <Switch>
                         {Object.keys(PublicRoutes).map(key => {

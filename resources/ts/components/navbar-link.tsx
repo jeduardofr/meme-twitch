@@ -19,7 +19,7 @@ function NavbarLink({ text, to, icon, selected, ...props }: Props) {
             className={clsx(
                 "flex flex-row space-x-2 font-bold text-sm px-2 py-2 md:rounded-l-md",
                 {
-                    "bg-yellow text-blue": selected,
+                    "bg-yellow-500 text-blue": selected,
                     "text-white": !selected
                 }
             )}

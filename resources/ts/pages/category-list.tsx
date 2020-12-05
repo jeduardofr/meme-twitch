@@ -17,7 +17,7 @@ function CategoryList() {
                 <Title>Categorías</Title>
                 <Link
                     to="/categories/form"
-                    className="px-6 py-2 text-blue bg-yellow rounded-md font-bold space-x-2 hover:shadow-lg hover:bg-yellow-400 focus:bg-yellow-500"
+                    className="px-6 py-2 text-blue bg-yellow-500 rounded-md font-bold space-x-2 hover:shadow-lg hover:bg-yellow-400 focus:bg-yellow-500"
                 >
                     <FontAwesomeIcon icon="plus-circle" />
                     <span>Agregar</span>

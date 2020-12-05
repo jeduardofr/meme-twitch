@@ -10,25 +10,30 @@ type InputProps = React.DetailedHTMLProps<
 > & {
     errors: FieldError;
     icon: IconProp;
+    label?: string;
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ id, icon, errors, ...props }, ref) => (
+    ({ id, label, icon, errors, ...props }, ref) => (
         <div className="flex flex-1 flex-col">
-            <div className="flex flex-row w-full">
+            <div className="w-full space-y-2">
+                <label className="text-white font-bold" htmlFor={id}>
+                    {label}
+                </label>
                 <input
                     className={clsx(
-                        "form-input block w-full bg-blue-dark text-white border-2 border-transparent focus:border-transparent focus:outline-none rounded-l-md  py-2 px-4 flex-1 rounded-r-none",
+                        "w-full bg-blue-dark border-2 focus:outline-none rounded-md py-2 px-4 text-white placeholder-gray-50",
                         {
-                            "border-pink": errors
+                            "focus:ring-2 focus:ring-light-purple border-blue-dark": !errors,
+                            "focus:ring-1 focus:ring-pink border-pink": errors
                         }
                     )}
                     ref={ref}
                     {...props}
                 />
-                <div className="bg-yellow text-blue rounded-r-md flex justify-center items-center px-3">
+                {/* <div className="bg-yellow text-blue rounded-r-md flex justify-center items-center px-3">
                     <FontAwesomeIcon icon={icon} />
-                </div>
+                </div> */}
             </div>
             {errors && (
                 <p className="text-white text-sm font-medium mt-2">

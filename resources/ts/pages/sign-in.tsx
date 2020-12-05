@@ -34,23 +34,25 @@ function SignIn() {
     return (
         <div className="w-full h-full flex flex-col items-center justify-center">
             <Title>Iniciar Sesión</Title>
-            <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="mt-8 w-md" onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     ref={register}
+                    label="Correo Electrónico"
                     name="email"
                     id="email"
                     type="email"
-                    placeholder="Correo"
+                    placeholder="tu.correo@gmail.com"
                     errors={errors.email}
                     icon="pencil-alt"
                 />
                 <br />
                 <Input
+                    label="Contraseña"
                     ref={register}
                     name="password"
                     id="password"
                     type="password"
-                    placeholder="Contraseña"
+                    placeholder="algoseguro"
                     errors={errors.password}
                     icon="pencil-alt"
                 />
