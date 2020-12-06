@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\SignUpNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,5 +46,10 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function sendWelcomeNotification()
+    {
+        $this->notify(new SignUpNotification($this));
     }
 }
