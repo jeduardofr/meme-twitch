@@ -34,7 +34,7 @@ function ImagePreviewer({ file = null, className }: Props) {
         <div className="h-32 w-32 border-2 border-dashed border-white rounded-md relative overflow">
             {file === null && (
                 <p className="text-white text-center absolute inset-0 flex justify-center items-center">
-                    No image selected
+                    Imagen no seleccionada
                 </p>
             )}
             {loading && (

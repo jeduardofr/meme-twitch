@@ -9,9 +9,7 @@ interface Props {
 }
 
 function NotificationCard({ notification }: Props) {
-    const removeNotification = useStoreActions(
-        state => state.notification.removeNotification
-    );
+    const removeNotification = useStoreActions(state => state.notification.removeNotification);
     const timer = useRef(null);
     useEffect(() => {
         timer.current = setTimeout(remove, notification.time);
@@ -36,13 +34,10 @@ function NotificationCard({ notification }: Props) {
 
     return (
         <div
-            className={clsx(
-                "w-full bg-blue p-4 border-l-4 rounded-md shadow-lg",
-                {
-                    "border-green": notification.level === "success",
-                    "border-pink": notification.level === "error"
-                }
-            )}
+            className={clsx("w-full bg-blue p-4 border-l-4 rounded-md shadow-lg", {
+                "border-green": notification.level === "success",
+                "border-pink": notification.level === "error"
+            })}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >

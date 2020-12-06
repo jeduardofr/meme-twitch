@@ -18,7 +18,9 @@ function Form({ defaultValues, onSubmit }: FormProps) {
         defaultValues
     });
     const [type, setType] = useState<ThumbnailType>(defaultValues.type);
-    const [file, setFile] = useState<FileList | string | null>(null);
+    const [file, setFile] = useState<FileList | string | null>(
+        defaultValues.url.length > 0 ? defaultValues.url : null
+    );
 
     function onImageChange(field: string) {
         setFile(getValues(field));

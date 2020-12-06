@@ -8,7 +8,7 @@ function NotificationWrapper() {
 
     return (
         <div
-            className={clsx("fixed right-0 top-0 mr-4 mt-4 w-64 space-y-2", {
+            className={clsx("fixed z-50 right-0 top-0 mr-4 mt-4 w-64 space-y-2", {
                 "space-y-2": notifications.length > 1
             })}
         >
