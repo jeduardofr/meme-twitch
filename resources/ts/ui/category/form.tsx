@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./validation";
-import useCategory, {
-    CategoryForm,
-    ThumbnailType
-} from "../../hooks/category.hook";
+import useCategory, { CategoryForm, ThumbnailType } from "../../hooks/category.hook";
 import Input from "../../components/input";
-import Select from "../../components/select";
 import Button from "../../components/button";
+import ImagePreviewer from "../../components/image-previewer";
 
 type FormProps = {
     defaultValues?: CategoryForm;
@@ -16,58 +13,107 @@ type FormProps = {
 };
 
 function Form({ defaultValues, onSubmit }: FormProps) {
-    const { register, handleSubmit, errors, getValues, reset } = useForm<
-        CategoryForm
-    >({
+    const { register, handleSubmit, errors, getValues, reset } = useForm<CategoryForm>({
         resolver: yupResolver(schema),
         defaultValues
     });
     const [type, setType] = useState<ThumbnailType>(defaultValues.type);
+    const [file, setFile] = useState<FileList | string | null>(null);
+
+    function onImageChange(field: string) {
+        setFile(getValues(field));
+    }
+
+    function onRadioChange() {
+        setType(getValues("type"));
+        setFile(null);
+    }
 
     return (
-        <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
             <Input
+                label="Nombre"
                 ref={register}
                 name="name"
                 id="name"
-                placeholder="Nombre"
+                placeholder="Comedia, Fedelobo, Risa"
                 errors={errors.name}
                 icon="pencil-alt"
             />
-            <div className="flex flex-col md:flex-row mt-4 space-y-4 md:space-x-4 md:space-y-0">
-                <div>
-                    <Select
-                        name="type"
-                        ref={register}
-                        options={[
-                            { label: "URL", value: "url" },
-                            { label: "Imagen local", value: "file" }
-                        ]}
-                        onChange={() => setType(getValues("type"))}
-                    />
+            <div className="mt-4">
+                <div className="flex flex-row space-x-8">
+                    <div className="flex flex-row space-x-2 items-center">
+                        <input
+                            type="radio"
+                            name="type"
+                            id="url-option"
+                            ref={register}
+                            value="url"
+                            onChange={onRadioChange}
+                        />
+                        <label className="text-white font-bold" htmlFor="url-option">
+                            URL
+                        </label>
+                    </div>
+                    <div className="flex flex-row space-x-2 items-center">
+                        <input
+                            type="radio"
+                            name="type"
+                            ref={register}
+                            value="file"
+                            id="file-option"
+                            onChange={onRadioChange}
+                        />
+                        <label className="text-white font-bold" htmlFor="file-option">
+                            Archivo local
+                        </label>
+                    </div>
                 </div>
-                {type === "url" && (
-                    <Input
-                        ref={register}
-                        name="url"
-                        id="url"
-                        placeholder="URL de imagen"
-                        errors={errors.url}
-                        icon="image"
-                    />
-                )}
-                {type === "file" && (
-                    <Input
-                        ref={register}
-                        name="file"
-                        id="file"
-                        placeholder="Archivo"
-                        type="file"
-                        errors={errors.file}
-                        icon="image"
-                    />
-                )}
+                <div className="mt-4 flex flex-row space-x-4 max-w-screen-md">
+                    <div className="flex-1">
+                        {type === "url" && (
+                            <Input
+                                ref={register}
+                                name="url"
+                                id="url"
+                                label="Dirección URL"
+                                placeholder="https://placekitten.com/g/200/300"
+                                errors={errors.url}
+                                onChange={() => onImageChange("url")}
+                                icon="image"
+                            />
+                        )}
+                        {type === "file" && (
+                            <div className="w-full">
+                                <label
+                                    htmlFor="file"
+                                    className="border-2 border-dashed p-4 border-white flex flex-col justify-center items-center w-full hover:border-opacity-50 transition duration-75 cursor-pointer"
+                                >
+                                    <img src="/images/dropzone.png" />
+                                    {file === null && (
+                                        <p className="text-white">No archivo seleccionado</p>
+                                    )}
+                                    {file !== null && (
+                                        <p className="text-white">{(file as FileList)[0].name}</p>
+                                    )}
+                                </label>
+                                {errors.file && errors.file.message}
+                                <input
+                                    className="w-0 h-0 absolute oveflow-hidden opacity-0"
+                                    style={{ zIndex: -1 }}
+                                    ref={register}
+                                    name="file"
+                                    id="file"
+                                    type="file"
+                                    onChange={() => onImageChange("file")}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <ImagePreviewer file={file} />
+                </div>
             </div>
+
             <div className="text-right mt-4">
                 <Button text="Guardar" icon="save" />
             </div>

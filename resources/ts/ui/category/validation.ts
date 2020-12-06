@@ -26,10 +26,7 @@ const schema = yup.object().shape({
             .test(
                 "fileType",
                 "El formato del archivo no es soportado",
-                value =>
-                    value &&
-                    value[0] &&
-                    SUPPORTED_FORMATS.includes(value[0].type)
+                value => value && value[0] && SUPPORTED_FORMATS.includes(value[0].type)
             )
     })
 });

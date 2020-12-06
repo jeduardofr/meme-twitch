@@ -17,9 +17,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ id, label, icon, errors, ...props }, ref) => (
         <div className="flex flex-1 flex-col">
             <div className="w-full space-y-2">
-                <label className="text-white font-bold" htmlFor={id}>
-                    {label}
-                </label>
+                {label && (
+                    <label className="text-white font-bold" htmlFor={id}>
+                        {label}
+                    </label>
+                )}
                 <input
                     className={clsx(
                         "w-full bg-blue-dark border-2 focus:outline-none rounded-md py-2 px-4 text-white placeholder-gray-50",
@@ -28,6 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             "focus:ring-1 focus:ring-pink border-pink": errors
                         }
                     )}
+                    id={id}
                     ref={ref}
                     {...props}
                 />
@@ -35,11 +38,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     <FontAwesomeIcon icon={icon} />
                 </div> */}
             </div>
-            {errors && (
-                <p className="text-white text-sm font-medium mt-2">
-                    {errors.message}
-                </p>
-            )}
+            {errors && <p className="text-white text-sm font-medium mt-2">{errors.message}</p>}
         </div>
     )
 );

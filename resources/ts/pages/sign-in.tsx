@@ -57,7 +57,7 @@ function SignIn() {
                     icon="pencil-alt"
                 />
                 <div className="text-right mt-4">
-                    <Button text="Guardar" icon="save" />
+                    <Button text="Ingresar" />
                 </div>
             </form>
         </div>

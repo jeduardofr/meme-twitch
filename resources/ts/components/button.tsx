@@ -6,7 +6,7 @@ type ButtonProps = React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
 > & {
-    icon: IconProp | null;
+    icon?: IconProp;
     text: string;
 };
 
