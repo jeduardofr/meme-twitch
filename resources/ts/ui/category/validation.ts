@@ -17,16 +17,16 @@ const schema = yup.object().shape({
         is: "file",
         then: yup
             .mixed()
-            .required("El archivo es obligatorio")
+            .test("file", "El archivo es obligatorio", value => value.length > 0)
             .test(
                 "fileSize",
                 "El tamaño del archivo es muy grande",
-                value => value && value[0] && value[0].size <= FILE_SIZE
+                value => value[0] && value[0].size <= FILE_SIZE
             )
             .test(
                 "fileType",
                 "El formato del archivo no es soportado",
-                value => value && value[0] && SUPPORTED_FORMATS.includes(value[0].type)
+                value => value[0] && SUPPORTED_FORMATS.includes(value[0].type)
             )
     })
 });

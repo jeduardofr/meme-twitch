@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./validation";
@@ -23,7 +24,17 @@ function Form({ defaultValues, onSubmit }: FormProps) {
     );
 
     function onImageChange(field: string) {
-        setFile(getValues(field));
+        // @@@ Find a proper fix to this error.
+        // The errors appears when we select a file for the first time (or after
+        // change the type of file to upload) and we try to change that file for
+        // another one, the actual value it's not different therefore the preview
+        // and the dropzone doesn't seem to detect any change. I suspect this is
+        // due to memory reasons, since the DOM only holds one instance of FileList
+        // and for that reason React can't detect any change.
+        if (field === "file") {
+            setFile(null);
+            setTimeout(() => setFile(getValues(field)), 1);
+        } else setFile(getValues(field));
     }
 
     function onRadioChange() {
@@ -89,7 +100,13 @@ function Form({ defaultValues, onSubmit }: FormProps) {
                             <div className="w-full">
                                 <label
                                     htmlFor="file"
-                                    className="border-2 border-dashed p-4 border-white flex flex-col justify-center items-center w-full hover:border-opacity-50 transition duration-75 cursor-pointer"
+                                    className={clsx(
+                                        "border-2 border-dashed p-4 flex flex-col justify-center items-center w-full hover:border-opacity-50 transition duration-75 cursor-pointer",
+                                        {
+                                            "border-white": !errors.file,
+                                            "border-pink": errors.file
+                                        }
+                                    )}
                                 >
                                     <img src="/images/dropzone.png" />
                                     {file === null && (
@@ -98,8 +115,10 @@ function Form({ defaultValues, onSubmit }: FormProps) {
                                     {file !== null && (
                                         <p className="text-white">{(file as FileList)[0].name}</p>
                                     )}
+                                    {errors.file && (
+                                        <span className="text-white">{errors.file.message}</span>
+                                    )}
                                 </label>
-                                {errors.file && errors.file.message}
                                 <input
                                     className="w-0 h-0 absolute oveflow-hidden opacity-0"
                                     style={{ zIndex: -1 }}
