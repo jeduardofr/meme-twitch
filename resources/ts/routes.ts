@@ -5,6 +5,7 @@ import CategoryList from "./pages/category-list";
 import CategoryForm from "./pages/category-form";
 import CategorySoundList from "./pages/category-sound-list";
 import SignIn from "./pages/sign-in";
+import SignUp from "./pages/sign-up";
 import SoundList from "./pages/sound-list";
 import SoundForm from "./pages/sound-form";
 import Profile from "./pages/profile";
@@ -47,6 +48,10 @@ export const SessionRoutes: Route = {
     SignIn: {
         component: SignIn,
         path: "/sign-in"
+    },
+    SignUp: {
+        component: SignUp,
+        path: "/sign-up"
     }
 };
 

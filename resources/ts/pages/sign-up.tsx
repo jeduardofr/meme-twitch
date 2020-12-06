@@ -6,26 +6,27 @@ import * as yup from "yup";
 import Input from "../components/input";
 import Button from "../components/button";
 import Title from "../components/title";
-import useAuth, { SignInForm } from "../hooks/auth.hook";
+import useAuth, { SignUpForm } from "../hooks/auth.hook";
 import useError from "../hooks/error.hook";
 
 const schema = yup.object().shape({
+    name: yup.string().required("El nombre es obligatorio"),
     email: yup.string().required("El correo electrónico es obligatorio"),
     password: yup.string().required("La contraseña es obligatorio")
 });
 
-function SignIn() {
-    const { register, handleSubmit, errors, setError } = useForm<SignInForm>({
+function SignUp() {
+    const { register, handleSubmit, errors, setError } = useForm<SignUpForm>({
         resolver: yupResolver(schema)
     });
-    const { signIn } = useAuth();
+    const { signUp } = useAuth();
     const { setFormErrors } = useError();
     const history = useHistory();
 
-    async function onSubmit(data: SignInForm) {
+    async function onSubmit(data: SignUpForm) {
         try {
-            await signIn(data);
-            history.push("/profile");
+            await signUp(data);
+            history.push("/sign-in");
         } catch (err) {
             setFormErrors(err.response.data, setError);
         }
@@ -33,8 +34,19 @@ function SignIn() {
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center">
-            <Title>Iniciar Sesión</Title>
-            <form className="mt-8 w-md" onSubmit={handleSubmit(onSubmit)}>
+            <Title>Crear cuenta</Title>
+            <form className="mt-8 max-w-md" onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                    ref={register}
+                    label="Nombre"
+                    name="name"
+                    id="name"
+                    type="name"
+                    placeholder="John Doe"
+                    errors={errors.name}
+                    icon="pencil-alt"
+                />
+                <br />
                 <Input
                     ref={register}
                     label="Correo Electrónico"
@@ -56,18 +68,29 @@ function SignIn() {
                     errors={errors.password}
                     icon="pencil-alt"
                 />
+                <br />
+                <Input
+                    label="Confirmación de contraseña"
+                    ref={register}
+                    name="password_confirmation"
+                    id="password_confirmation"
+                    type="password"
+                    placeholder="algoseguro"
+                    errors={errors.password_confirmation}
+                    icon="pencil-alt"
+                />
                 <div className="mt-8 flex flex-col justify-end">
                     <Link
                         className="mb-2 text-sm text-right text-light-purple hover:underline transition duration-100"
-                        to="/sign-up"
+                        to="/sign-in"
                     >
-                        ¿No tienes una cuenta?
+                        ¿Ya tienes una cuenta?
                     </Link>
-                    <Button text="Ingresar" />
+                    <Button text="Registrarme" />
                 </div>
             </form>
         </div>
     );
 }
 
-export default SignIn;
+export default SignUp;

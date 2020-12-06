@@ -6,10 +6,15 @@ export type SignInForm = {
     password: string;
 };
 
+export type SignUpForm = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+};
+
 function useAuth() {
-    const { setToken, setIsSignedIn, setIsLoading } = useStoreActions(
-        state => state.auth
-    );
+    const { setToken, setIsSignedIn, setIsLoading } = useStoreActions(state => state.auth);
 
     function signIn(data: SignInForm) {
         return usePostRequest("/auth/sign-in", data, {
@@ -34,6 +39,15 @@ function useAuth() {
         setIsLoading(false);
     }
 
+    function signUp(data: SignUpForm) {
+        return usePostRequest("/auth/sign-up", data, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json"
+            }
+        });
+    }
+
     function cleanUpConfig() {
         localStorage.removeItem("token");
         delete axios.defaults.headers.common["Authorization"];
@@ -43,6 +57,7 @@ function useAuth() {
 
     return {
         signIn,
+        signUp,
         loadConfig,
         cleanUpConfig
     };

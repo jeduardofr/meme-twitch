@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useDeleteRequest, useFetcher, usePostRequest } from "../utils/api";
 import { useStoreActions } from "./store.hook";
+import useNotification from "./notification.hook";
 
 export interface Category {
     id: number;
@@ -22,22 +23,14 @@ export type CategoryForm = {
 };
 
 export default function useCategory() {
-    const addNotification = useStoreActions(
-        state => state.notification.addNotification
-    );
+    const addNotification = useNotification();
 
-    const { data, error, mutate } = useSWR<Category[]>(
-        "/categories",
-        useFetcher
-    );
+    const { data, error, mutate } = useSWR<Category[]>("/categories", useFetcher);
 
     async function createCategory(body: CategoryForm) {
         const formData = new FormData();
         formData.append("name", body.name);
-        formData.append(
-            "thumbnail",
-            body.type === "url" ? body.url : body.file[0]
-        );
+        formData.append("thumbnail", body.type === "url" ? body.url : body.file[0]);
 
         const category = await usePostRequest("/categories", formData, {
             headers: {
@@ -46,20 +39,15 @@ export default function useCategory() {
         });
 
         mutate([...data, category.data]);
-        addNotification({
-            message: "Categoría agregada exitosamente",
-            time: 3000,
-            level: "success"
+        addNotification.success({
+            message: "Categoría agregada exitosamente"
         });
     }
 
     async function updateCategory(id: number, body: CategoryForm) {
         const formData = new FormData();
         formData.append("name", body.name);
-        formData.append(
-            "thumbnail",
-            body.type === "url" ? body.url : body.file[0]
-        );
+        formData.append("thumbnail", body.type === "url" ? body.url : body.file[0]);
         formData.append("_method", "PUT");
 
         const category = await usePostRequest(`/categories/${id}`, formData, {
@@ -78,20 +66,16 @@ export default function useCategory() {
             })
         );
 
-        addNotification({
-            message: "Categoría actualizada exitosamente",
-            time: 3000,
-            level: "success"
+        addNotification.success({
+            message: "Categoría actualizada exitosamente"
         });
     }
 
     async function deleteCategory(id: number) {
         await useDeleteRequest(`/categories/${id}`);
         mutate(data.filter(c => c.id !== id));
-        addNotification({
-            message: "Categoría eliminada exitosamente",
-            time: 3000,
-            level: "success"
+        addNotification.success({
+            message: "Categoría eliminada exitosamente"
         });
     }
 
