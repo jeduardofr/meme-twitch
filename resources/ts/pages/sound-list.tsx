@@ -10,13 +10,13 @@ function SoundList() {
     if (!data) return <p>Loading</p>;
 
     return (
-        <div className="mt-4 px-8">
-            <Title>Miedo</Title>
-            <div className="grid grid-cols-5 gap-6 w-full mt-4">
+        <div className="mt-4 mx-4 w-full">
+            <Title>Trending</Title>
+                <div className="grid grid-cols-12 gap-6 w-full mt-4">
                 {data.map(sound => (
                     <Audio key={sound.id} sound={sound} />
                 ))}
-            </div>
+                </div>
         </div>
     );
 }

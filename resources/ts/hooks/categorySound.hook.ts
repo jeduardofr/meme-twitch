@@ -4,14 +4,13 @@ import { useStoreActions } from "./store.hook";
 import useNotification from "./notification.hook";
 import {Sound} from "./sound.hook";
 import { Category } from "./category.hook";
-
+type CategorySound = Category&{sounds:Sound[]}
 
 export default function useCategorySound(id:number) {
-    const { data, error } = useSWR<Sound[]>(`/categorySound/${id}`, useFetcher);
-    const sounds = data;
+    const { data, error } = useSWR<CategorySound>(`/categorySound/${id}`, useFetcher);
 
     return {
-        sounds,
+        data,
         error
     };
 }

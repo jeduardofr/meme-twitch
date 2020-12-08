@@ -20,6 +20,8 @@ class CategoryResource extends JsonResource
             'url'       => $this->url,
             'mimeType'  => $this->thumbnail_mime_type,
             'count'     => $this->appearances()->count(),
+            // 'sounds'    => $this->whenLoaded("sounds", SoundResource::collection($this->sounds)),
+            'sounds'    => $this->whenLoaded("sounds", function(){return SoundResource::collection($this->sounds);}),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

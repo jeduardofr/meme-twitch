@@ -13,7 +13,8 @@ import { useStoreState, useStoreActions } from "../hooks/store.hook";
 const links: Omit<LinkProps, "selected">[] = [
     { to: "/", text: "Inicio", icon: "home" },
     { to: "/categories", text: "Categorías", icon: "tags" },
-    { to: "/sounds", text: "Trending", icon: "crosshairs" }
+    { to: "/sounds", text: "Trending", icon: "crosshairs" },
+    { to: "/sounds/form", text: "CrearSonido", icon: "plus-circle" }
 ];
 
 function Sidebar() {
