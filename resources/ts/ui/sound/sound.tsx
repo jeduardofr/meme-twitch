@@ -21,10 +21,10 @@ function Sound({ sound }: Props) {
     }
 
     return (
-        <div>
-            <div className="w-40 rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg cursor-pointer relative">
+        <div className="col-span-6 sm:col-span-4 lg:col-span-3 xl:col-span-2">
+            <div className="  rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg cursor-pointer relative">
                 <div
-                    className="w-40 h-40 bg-cover rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg relative"
+                    className="square bg-cover rounded-tr-3xl rounded-bl-3xl rounded-tl-lg rounded-br-lg relative"
                     style={{
                         backgroundImage: `url(${sound.thumbnailUrl}`
                     }}
