@@ -7,8 +7,10 @@ import useSound, { SoundForm, ThumbnailType } from "../../hooks/sound.hook";
 import Input from "../../components/input";
 import Select from "../../components/select";
 import Button from "../../components/button";
-
 import ImagePreviewer from "../../components/image-previewer";
+
+import useCategory from "../../hooks/category.hook";
+
 
 type FormProps = {
     defaultValues?: SoundForm;
@@ -26,6 +28,7 @@ function Form({ defaultValues, onSubmit }: FormProps) {
     const [file, setFile] = useState<FileList | string | null>(
         defaultValues.url.length > 0 ? defaultValues.url : null
     );
+    const { data } = useCategory();
 
     function onImageChange(field: string) {
         // @@@ Find a proper fix to this error.
@@ -45,6 +48,8 @@ function Form({ defaultValues, onSubmit }: FormProps) {
         setType(getValues("type"));
         setFile(null);
     }
+
+    if(!data) return (<p>loading</p>)
 
     return (
         <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
@@ -71,52 +76,16 @@ function Form({ defaultValues, onSubmit }: FormProps) {
             />
 
             <div className="mt-4"></div>
-
             {/* Subir archivos */}
-            <Input
-                ref={register}
-                name="audio"
-                id="audio"
-                placeholder="audio"
-                type="file"
-                errors={errors.audio}
-                icon="volume-up"
-            />
-
-            
-            {/* <div className="w-full">
-                <label
-                    htmlFor="file"
-                    className={clsx(
-                        "border-2 border-dashed p-4 flex flex-col justify-center items-center w-full hover:border-opacity-50 transition duration-75 cursor-pointer",
-                        {
-                            "border-white": !errors.file,
-                            "border-pink": errors.file
-                        }
-                    )}
-                >
-                    <img src="/images/audio.png" width="70px"/>
-                    {file === null && (
-                        <p className="text-white">No hay audio seleccionado</p>
-                    )}
-                    {file !== null && (
-                        <p className="text-white">{(file as FileList)[0].name}</p>
-                    )}
-                    {errors.file && (
-                        <span className="text-white">{errors.file.message}</span>
-                    )}
-                </label>
-                <input
-                    className="w-0 h-0 absolute oveflow-hidden opacity-0"
-                    style={{ zIndex: -1 }}
+                <Input
                     ref={register}
-                    name="sound"
-                    id="file"
+                    name="audio"
+                    id="audio"
+                    placeholder="audio"
                     type="file"
-                    onChange={() => onImageChange("file")}
+                    errors={errors.audio}
+                    icon="volume-up"
                 />
-            </div> */}
-
 
                 <div className="mt-4">
                 <div className="flex flex-row space-x-8">
@@ -201,7 +170,15 @@ function Form({ defaultValues, onSubmit }: FormProps) {
                 </div>
             </div>
 
-            
+            <div>
+                <select name="categories" id="categories" multiple ref={register}>
+                    {data.map(category => (
+                        <option className="bg-blue text-white" value={category.id}>{category.name}</option>
+                    ))}
+                </select>
+            </div>
+
+
             <div className="text-right mt-4">
                 <Button text="Guardar" icon="save" />
             </div>
