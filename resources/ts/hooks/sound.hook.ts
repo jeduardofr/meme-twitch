@@ -23,6 +23,7 @@ export type SoundForm = {
     url: string;
     file: FileList;
     type: ThumbnailType;
+    categories: string[];
 };
 
 export default function useSound() {
@@ -34,6 +35,7 @@ export default function useSound() {
 
     async function createSound(body: SoundForm) {
         const formData = new FormData();
+        body.categories.forEach((v,i)=>formData.append(`categories[${i}]`, v))
         formData.append("keyword", body.keyword);
         formData.append("author", body.author);
         formData.append("audio", body.audio[0]);
@@ -41,7 +43,7 @@ export default function useSound() {
             "thumbnail",
             body.type === "url" ? body.url : body.file[0]
         );
-
+        
         const sound = await usePostRequest("/sounds", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
@@ -58,6 +60,7 @@ export default function useSound() {
 
     async function updateSound(id: number, body: SoundForm) {
         const formData = new FormData();
+        body.categories.forEach((v,i)=>formData.append(`categories[${i}]`, v))
         formData.append("keyword", body.keyword);
         formData.append("audio", body.audio[0]);
         formData.append(
@@ -65,12 +68,13 @@ export default function useSound() {
             body.type === "url" ? body.url : body.file[0]
         );
         formData.append("_method", "PUT");
-
+        
         const sound = await usePostRequest(`/sounds/${id}`, formData, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
         });
+
 
         mutate(
             data.map(c => {
