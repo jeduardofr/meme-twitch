@@ -34,6 +34,8 @@ class Sound extends Model
 
     public function categories()
     {
+        // Si se realiza de la siguiente manera ya no es necesario cambiar el nombre de la tabla
+        // return $this->belongsToMany(Category::class, CategorySound::class);
         return $this->belongsToMany(Category::class);
     }
 }

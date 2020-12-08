@@ -14,4 +14,9 @@ class CategorySoundController extends Controller
     {
         return SoundResource::collection($category->sounds);
     }
+
+    public function update()
+    {
+
+    }
 }

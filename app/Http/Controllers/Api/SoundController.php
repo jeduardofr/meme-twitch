@@ -43,6 +43,9 @@ class SoundController extends Controller
             'thumbnail_mime_type'   => $request->hasFile('thumbnail') ? $image->mime_type : null,
         ]);
 
+        $sound->categories()->sync($request->categories);
+
+ 
         return new SoundResource($sound);
     }
 
@@ -68,6 +71,8 @@ class SoundController extends Controller
 
         $sound->save();
 
+        $sound->categories()->sync($request->categories);
+
         return (new SoundResource($sound))
             ->response()
             ->setStatusCode(200);
@@ -76,6 +81,8 @@ class SoundController extends Controller
     // Destroy
     public function destroy(Sound $sound)
     {
+        $sound->categories()->detach();
+
         $this->fileService->removeIfExists('public/images/' . $sound->thumbnail);
         $this->fileService->removeIfExists('public/sounds/' . $sound->audio);
         $sound->delete();
