@@ -11,7 +11,7 @@ class SignUpController extends Controller
     public function store(SignUpRequest $request)
     {
         $user = User::create($request->only('name', 'password', 'email'));
-        // $user->sendWelcomeNotification();
+        $user->sendWelcomeNotification();
 
         return response()->json(['success' => true], 201);
     }

@@ -38,8 +38,10 @@ function Form({ defaultValues, onSubmit }: FormProps) {
     }
 
     function onRadioChange() {
-        setType(getValues("type"));
-        setFile(null);
+        const value = getValues("type");
+        setType(value);
+        if (value === "url" && defaultValues.url.length > 0) setFile(defaultValues.url);
+        else setFile(null);
     }
 
     return (

@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SignUpNotification extends Notification
+class WelcomeNotification extends Notification
 {
     use Queueable;
 
@@ -43,8 +43,8 @@ class SignUpNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Bienvenido ' . $this->user->name)
-            ->line('Gracias por unirte a esta plataforma. Esperamos que te divierats muchas usandola.');
+            ->greeting('Bienvenido ' . $this->user->name)
+            ->line('Gracias por unirte a esta plataforma. Estamos muy contentos de que te unas y esperamos que te diviertas mucho.');
     }
 
     /**

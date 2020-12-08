@@ -24,15 +24,17 @@ function ImagePreviewer({ file = null, className }: Props) {
             reader.readAsDataURL(file[0]);
         }
 
-        if (typeof file === "string") {
+        if (typeof file === "string" && file.length > 0) {
             imageRef.current.src = file;
+            setLoading(false);
+        } else {
             setLoading(false);
         }
     }, [file]);
 
     return (
         <div className="h-32 w-32 border-2 border-dashed border-white rounded-md relative overflow">
-            {file === null && (
+            {(file === null || file.length === 0) && (
                 <p className="text-white text-center absolute inset-0 flex justify-center items-center">
                     Imagen no seleccionada
                 </p>
@@ -45,7 +47,7 @@ function ImagePreviewer({ file = null, className }: Props) {
             <img
                 className={clsx({
                     "w-full h-full object-cover": file !== null && !loading,
-                    "opacity-0": file === null || loading
+                    "opacity-0": file === null || loading || file.length === 0
                 })}
                 ref={imageRef}
             />
