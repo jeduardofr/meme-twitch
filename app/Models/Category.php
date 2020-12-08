@@ -20,7 +20,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'thumbnail', 'thumbnail_mime_type', 'is_url'];
+    protected $fillable = ['name', 'thumbnail', 'thumbnail_mime_type', 'is_url', 'user_id'];
 
     protected $with = ['appearances'];
 

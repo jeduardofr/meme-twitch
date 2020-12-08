@@ -32,51 +32,56 @@ export default function useCategory() {
         formData.append("name", body.name);
         formData.append("thumbnail", body.type === "url" ? body.url : body.file[0]);
 
-        const category = await usePostRequest("/categories", formData, {
+        usePostRequest("/categories", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
-        });
-
-        mutate([...data, category.data]);
-        addNotification.success({
-            message: "Categoría agregada exitosamente"
+        }).then(response => {
+            mutate([...data, response.data]);
+            addNotification.success({
+                message: "Categoría agregada exitosamente"
+            });
         });
     }
 
-    async function updateCategory(id: number, body: CategoryForm) {
+    function updateCategory(id: number, body: CategoryForm) {
         const formData = new FormData();
         formData.append("name", body.name);
         formData.append("thumbnail", body.type === "url" ? body.url : body.file[0]);
         formData.append("_method", "PUT");
 
-        const category = await usePostRequest(`/categories/${id}`, formData, {
+        usePostRequest(`/categories/${id}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
-        });
+        })
+            .then(response => {
+                mutate(
+                    data.map(c => {
+                        if (id === c.id) {
+                            return response.data;
+                        }
 
-        mutate(
-            data.map(c => {
-                if (id === c.id) {
-                    return category.data;
-                }
+                        return c;
+                    })
+                );
 
-                return c;
+                addNotification.success({
+                    message: "Categoría actualizada exitosamente"
+                });
             })
-        );
-
-        addNotification.success({
-            message: "Categoría actualizada exitosamente"
-        });
+            .catch(e => addNotification.error({ message: e.response.data.message }));
     }
 
-    async function deleteCategory(id: number) {
-        await useDeleteRequest(`/categories/${id}`);
-        mutate(data.filter(c => c.id !== id));
-        addNotification.success({
-            message: "Categoría eliminada exitosamente"
-        });
+    function deleteCategory(id: number) {
+        useDeleteRequest(`/categories/${id}`)
+            .then(() => {
+                mutate(data.filter(c => c.id !== id));
+                addNotification.success({
+                    message: "Categoría eliminada exitosamente"
+                });
+            })
+            .catch(e => addNotification.error({ message: e.response.data.message }));
     }
 
     return {

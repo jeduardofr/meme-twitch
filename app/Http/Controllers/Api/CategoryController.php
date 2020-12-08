@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\FileService;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -15,6 +16,8 @@ class CategoryController extends Controller
     public function __construct(FileService $fileService)
     {
         $this->fileService = $fileService;
+
+        $this->middleware('auth:sanctum')->except('index');
     }
 
     public function index()
@@ -39,6 +42,11 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
+        if (!$request->user()->can('update', $category)) {
+            // @@@ Centralize this in a class maybe
+            return response()->json([ 'error' => true, 'message' => 'No eres el dueño de este recurso, no puedes actualizarlo.' ], 403);
+        }
+
         if ($request->hasFile('thumbnail')) {
             $this->fileService->removeIfExists('public/images/'. $category->thumbnail);
             $image = $this->fileService->upload('public/images', $request->file('thumbnail'));
@@ -58,8 +66,12 @@ class CategoryController extends Controller
             ->setStatusCode(200);
     }
 
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
+        if (!$request->user()->can('delete', $category)) {
+            return response()->json([ 'error' => true, 'message' => 'No eres el dueño de este recurso, no puedes eliminarlo.' ], 403);
+        }
+
         $this->fileService->removeIfExists('public/images/' . $category->thumbnail);
         $category->delete();
 
