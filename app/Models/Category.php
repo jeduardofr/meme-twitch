@@ -44,4 +44,9 @@ class Category extends Model
     {
         return $this->hasMany(CategorySound::class);
     }
+
+    public function sounds()
+    {
+        return $this->belongsToMany(Sound::class);
+    }
 }

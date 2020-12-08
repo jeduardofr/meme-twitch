@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SignInController;
 use App\Http\Controllers\Api\SignUpController;
 use App\Http\Controllers\Api\SoundController;
+use App\Http\Controllers\Api\CategorySoundController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +35,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::resource('sounds', SoundController::class)->except(['edit', 'show', 'create']);
 Route::resource('categories', CategoryController::class)->except(['show', 'create', 'edit']);
+
+
+
+    Route::get('/categorySound/{category}', [CategorySoundController::class, "index"]);

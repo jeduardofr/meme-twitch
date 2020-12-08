@@ -31,4 +31,9 @@ class Sound extends Model
 
         $this->attributes['is_url'] = filter_var($value, FILTER_VALIDATE_URL) ? true : false;
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
