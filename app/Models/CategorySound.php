@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategorySound extends Model
 {
+    protected $table = "category_sound";
+
     use HasFactory;
 }

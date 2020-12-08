@@ -14,7 +14,7 @@ class CreateCategorySoundsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_sounds', function (Blueprint $table) {
+        Schema::create('category_sound', function (Blueprint $table) {
             $table->unsignedBigInteger("sound_id");
             $table->unsignedBigInteger("category_id");
             $table->timestamps();
@@ -31,6 +31,6 @@ class CreateCategorySoundsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_sounds');
+        Schema::dropIfExists('category_sound');
     }
 }
