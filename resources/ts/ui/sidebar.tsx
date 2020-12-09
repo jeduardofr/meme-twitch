@@ -14,7 +14,7 @@ const links: Omit<LinkProps, "selected">[] = [
     { to: "/", text: "Inicio", icon: "home" },
     { to: "/categories", text: "Categorías", icon: "tags" },
     { to: "/sounds", text: "Trending", icon: "crosshairs" },
-    { to: "/sounds/form", text: "CrearSonido", icon: "plus-circle" }
+    { to: "/sounds/form", text: "Crear Sonido", icon: "plus-circle" }
 ];
 
 function Sidebar() {
@@ -28,10 +28,7 @@ function Sidebar() {
     return (
         <nav className="w-full bg-blue md:min-h-with-gap rounded-t-xl md:rounded-tr-3xl md:w-64">
             <div className="px-4 mt-4 text-right md:hidden">
-                <button
-                    onClick={() => setOpen(!open)}
-                    className="text-white focus:text-yellow"
-                >
+                <button onClick={() => setOpen(!open)} className="text-white focus:text-yellow">
                     <FontAwesomeIcon icon="bars" size="2x" />
                 </button>
             </div>

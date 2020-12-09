@@ -45,7 +45,7 @@ class SoundController extends Controller
 
         $sound->categories()->sync($request->categories);
 
- 
+
         return new SoundResource($sound);
     }
 

@@ -11,16 +11,13 @@ import ImagePreviewer from "../../components/image-previewer";
 
 import useCategory from "../../hooks/category.hook";
 
-
 type FormProps = {
     defaultValues?: SoundForm;
     onSubmit: (data: SoundForm) => void;
 };
 
 function Form({ defaultValues, onSubmit }: FormProps) {
-    const { register, handleSubmit, errors, getValues, reset } = useForm<
-        SoundForm
-    >({
+    const { register, handleSubmit, errors, getValues, reset } = useForm<SoundForm>({
         resolver: yupResolver(schema),
         defaultValues
     });
@@ -31,13 +28,6 @@ function Form({ defaultValues, onSubmit }: FormProps) {
     const { data } = useCategory();
 
     function onImageChange(field: string) {
-        // @@@ Find a proper fix to this error.
-        // The errors appears when we select a file for the first time (or after
-        // change the type of file to upload) and we try to change that file for
-        // another one, the actual value it's not different therefore the preview
-        // and the dropzone doesn't seem to detect any change. I suspect this is
-        // due to memory reasons, since the DOM only holds one instance of FileList
-        // and for that reason React can't detect any change.
         if (field === "file") {
             setFile(null);
             setTimeout(() => setFile(getValues(field)), 1);
@@ -49,12 +39,12 @@ function Form({ defaultValues, onSubmit }: FormProps) {
         setFile(null);
     }
 
-    if(!data) return (<p>loading</p>)
+    if (!data) return <p>loading</p>;
 
     return (
         <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
             <Input
-                label = "Keyword"
+                label="Keyword"
                 ref={register}
                 name="keyword"
                 id="keyword"
@@ -63,10 +53,9 @@ function Form({ defaultValues, onSubmit }: FormProps) {
                 icon="key"
             />
 
-
             <div className="mt-4"></div>
             <Input
-                label = "Autor"
+                label="Autor"
                 ref={register}
                 name="author"
                 id="author"
@@ -77,17 +66,17 @@ function Form({ defaultValues, onSubmit }: FormProps) {
 
             <div className="mt-4"></div>
             {/* Subir archivos */}
-                <Input
-                    ref={register}
-                    name="audio"
-                    id="audio"
-                    placeholder="audio"
-                    type="file"
-                    errors={errors.audio}
-                    icon="volume-up"
-                />
+            <Input
+                ref={register}
+                name="audio"
+                id="audio"
+                placeholder="audio"
+                type="file"
+                errors={errors.audio}
+                icon="volume-up"
+            />
 
-                <div className="mt-4">
+            <div className="mt-4">
                 <div className="flex flex-row space-x-8">
                     <div className="flex flex-row space-x-2 items-center">
                         <input
@@ -170,14 +159,24 @@ function Form({ defaultValues, onSubmit }: FormProps) {
                 </div>
             </div>
 
-            <div>
-                <select name="categories" id="categories" multiple ref={register}>
+            <div className="w-full flex flex-col space-y-2 mt-4">
+                <label className="text-white font-bold" htmlFor="categories">
+                    Categorías
+                </label>
+                <select
+                    className="w-64 bg-blue-dark py-2 px-4"
+                    name="categories"
+                    id="categories"
+                    multiple
+                    ref={register}
+                >
                     {data.map(category => (
-                        <option className="bg-blue text-white" value={category.id}>{category.name}</option>
+                        <option className="text-white" value={category.id}>
+                            {category.name}
+                        </option>
                     ))}
                 </select>
             </div>
-
 
             <div className="text-right mt-4">
                 <Button text="Guardar" icon="save" />

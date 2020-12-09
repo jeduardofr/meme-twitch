@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import useSound, { SoundForm, ThumbnailType } from "../hooks/sound.hook";
 import { useParams, useHistory } from "react-router-dom";
 import Form from "../ui/sound/form";
+import Spinner from "../components/spinner";
 
 function SoundForm() {
     const params = useParams<{ id: string | null }>();
     const history = useHistory();
-    const { data, error, createSound, updateSound } = useSound();
+    const { data, createSound, updateSound } = useSound();
 
     const [loading, setLoading] = useState(true);
     const [defaultValues, setDefaultValues] = useState({} as SoundForm);
@@ -22,13 +23,7 @@ function SoundForm() {
                 return;
             }
 
-            const {
-                keyword,
-                author,
-                audioUrl,
-                thumbnailMimeType,
-                thumbnailUrl
-            } = sound;
+            const { keyword, author, audioUrl, thumbnailMimeType, thumbnailUrl } = sound;
 
             setDefaultValues({
                 keyword,
@@ -36,7 +31,8 @@ function SoundForm() {
                 audio: null,
                 url: thumbnailUrl,
                 file: null,
-                type: (thumbnailMimeType ? "url" : "file") as ThumbnailType
+                type: (thumbnailMimeType ? "url" : "file") as ThumbnailType,
+                categories: []
             });
         } else {
             setDefaultValues({
@@ -45,7 +41,8 @@ function SoundForm() {
                 url: "",
                 audio: null,
                 file: null,
-                type: "url"
+                type: "url",
+                categories: []
             });
         }
         setLoading(false);
@@ -61,7 +58,7 @@ function SoundForm() {
         history.push("/sounds");
     }
 
-    if (loading) return <h1>Loading</h1>;
+    if (loading) return <Spinner />;
 
     return (
         <div className="w-full px-8">

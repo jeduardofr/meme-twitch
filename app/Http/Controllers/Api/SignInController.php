@@ -14,7 +14,7 @@ class SignInController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!Hash::check($request->password, $user->password)) {
-            return response()->json([ 'errors' => [ 'password' => [ 'The credentials are invalid.' ] ] ], 401);
+            return response()->json([ 'errors' => [ 'password' => [ 'Las crendenciales son inválidas.' ] ] ], 401);
         }
 
         $user->tokens()->delete();

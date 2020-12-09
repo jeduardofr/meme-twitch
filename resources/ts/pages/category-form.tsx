@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import useCategory, {
-    CategoryForm,
-    ThumbnailType
-} from "../hooks/category.hook";
+import useCategory, { CategoryForm, ThumbnailType } from "../hooks/category.hook";
 import Form from "../ui/category/form";
+import Spinner from "../components/spinner";
 
 function CategoryForm() {
     const params = useParams<{ id: string | null }>();
     const history = useHistory();
-    const { data, error, createCategory, updateCategory } = useCategory();
+    const { data, createCategory, updateCategory } = useCategory();
 
     const [loading, setLoading] = useState(true);
     const [defaultValues, setDefaultValues] = useState({} as CategoryForm);
@@ -19,7 +17,6 @@ function CategoryForm() {
 
         if (params.id) {
             const category = data.find(c => c.id === parseInt(params.id, 10));
-            // Category not found
             if (!category) {
                 history.push("/categories");
                 return;
@@ -53,7 +50,7 @@ function CategoryForm() {
         }
     }
 
-    if (loading) return <h1>Loading</h1>;
+    if (loading) return <Spinner />;
 
     return (
         <div className="w-full px-8">

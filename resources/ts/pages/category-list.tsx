@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useCategory from "../hooks/category.hook";
 import CategoryCard from "../ui/category/category-card";
 import Title from "../components/title";
+import Spinner from "../components/spinner";
 
 function CategoryList() {
     const { data, error } = useCategory();
 
     if (error) return <p>Error</p>;
-    if (!data) return <p>Loading</p>;
+    if (!data) return <Spinner />;
 
     return (
         <div className="w-full px-4 md:px-8 pb-4">

@@ -27,23 +27,18 @@ export type SoundForm = {
 };
 
 export default function useSound() {
-    const addNotification = useStoreActions(
-        state => state.notification.addNotification
-    );
+    const addNotification = useStoreActions(state => state.notification.addNotification);
 
     const { data, error, mutate } = useSWR<Sound[]>("/sounds", useFetcher);
 
     async function createSound(body: SoundForm) {
         const formData = new FormData();
-        body.categories.forEach((v,i)=>formData.append(`categories[${i}]`, v))
+        body.categories.forEach((value, i) => formData.append(`categories[${i}]`, value));
         formData.append("keyword", body.keyword);
         formData.append("author", body.author);
         formData.append("audio", body.audio[0]);
-        formData.append(
-            "thumbnail",
-            body.type === "url" ? body.url : body.file[0]
-        );
-        
+        formData.append("thumbnail", body.type === "url" ? body.url : body.file[0]);
+
         const sound = await usePostRequest("/sounds", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
@@ -60,21 +55,17 @@ export default function useSound() {
 
     async function updateSound(id: number, body: SoundForm) {
         const formData = new FormData();
-        body.categories.forEach((v,i)=>formData.append(`categories[${i}]`, v))
+        body.categories.forEach((value, i) => formData.append(`categories[${i}]`, value));
         formData.append("keyword", body.keyword);
         formData.append("audio", body.audio[0]);
-        formData.append(
-            "thumbnail",
-            body.type === "url" ? body.url : body.file[0]
-        );
+        formData.append("thumbnail", body.type === "url" ? body.url : body.file[0]);
         formData.append("_method", "PUT");
-        
+
         const sound = await usePostRequest(`/sounds/${id}`, formData, {
             headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
         });
-
 
         mutate(
             data.map(c => {

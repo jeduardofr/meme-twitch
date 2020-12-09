@@ -8,11 +8,10 @@ import { PublicRoutes, SessionRoutes, PrivateRoutes } from "./routes";
 import NotFound from "./pages/not-found";
 
 import Sidebar from "./ui/sidebar";
+import Spinner from "./components/spinner";
 
 function Bootstrap() {
-    const { loading, isTokenSet, isSignedIn } = useStoreState(
-        state => state.auth
-    );
+    const { loading, isTokenSet, isSignedIn } = useStoreState(state => state.auth);
     const { setIsSignedIn, setUser } = useStoreActions(state => state.auth);
     const { addNotification } = useStoreActions(state => state.notification);
     const { fetchProfile } = useUser();
@@ -32,14 +31,13 @@ function Bootstrap() {
                     addNotification({
                         time: 5000,
                         level: "error",
-                        message:
-                            "Lo sentimos, necesitas volver a iniciar sesión."
+                        message: "Lo sentimos, necesitas volver a iniciar sesión."
                     });
                 });
         }
     }, [isTokenSet]);
 
-    if (loading) return <h1>Loading</h1>;
+    if (loading) return <Spinner />;
 
     return (
         <BrowserRouter>
