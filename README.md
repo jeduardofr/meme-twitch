@@ -1,56 +1,76 @@
 # Meme Twitch Bot
 
-A bot to play audios (memes) such as "That's what she said" or "No mames que asco"
-for the twitch streaming platform.
+Una plataforma en conjunto con un bot (proximamente) que te permite tocar audios
+a tu streamer favorito de algunas frases conocidas como:
 
-## Requirements
+-   Ah se mamo (Franco Escamilla)
+-   No mames que asco (Fedelobo)
+-   Ya la cague, verdad? (Fedelobo)
+
+El objetivo en general es el que el público pueda interactuar mas con el streamer
+sin necesidad de recurrir a las recompensas de Twitch o de terceros.
+
+## Integrantes del Equipo
+
+-   Jesús Rangel
+-   Andrés López
+
+## Datos generales del proyecto
+
+El servidor de nuestro proyecto esta creado con Laravel y la parte del front
+esta creada con React en conjunto con TypeScript. En sí toda la transferencia de
+información se realiza mediante una API.
+
+## Requisitos
 
 ### Docker
 
-For [Docker](Docker.md).
+Para [Docker](Docker.md).
 
-### Full local installation
+### Instalación completa local
 
 -   [Node](https://nodejs.org)
 -   [Composer](https://getcomposer.org/download/)
 -   [PHP](https://www.php.net/downloads.php)
 -   [MySQL](https://dev.mysql.com/downloads/)
 
-## Installation
+## Instalación
 
-Clone the repository with
+Clonar el repositorio con:
 
     $ git clone https://gitlab.com/werofuentes/meme-twitch-bot bot
     $ cd bot
 
-Create `.env` file
+Crear archivo `.env`
 
     $ cp .env.example .env
 
-After this you should set the database credentials. Also you should configure
-the `APP_URL` variable as well since the frontend depends on that variable to
-successfully make the requests to our API.
+Después de esto, necesitas configurar las credenciales para la base de datos.
+Además necesitamos configurar el valor `APP_URL` y `APP_API` ya que nuestro front-end
+depende de dicha variable para poder ser ejecutado de manera correcta.
 
-Generate key for the application
-
-    $ php artisan key:generate
-
-Install dependencies for Composer and NPM.
+Instalar dependencias de NPM y Composer
 
     $ composer install
     $ npm install
 
-Run migrations
+Generar llave para la aplicación
+
+    $ php artisan key:generate
+
+Correr migraciones
 
     $ php artisan migrate
 
-Compile the front-end once
+Compilar nuestro front-end
 
     $ npm run dev
 
-Now, if you want to have hot reload for the frontend, you need to set the
-variable `MIX_API` with you local url without protocol. For example if your
-url is `http://mi-url-local.test` then the variable should be set to
-`mi-url-local.test`. After that you can run:
+Se cuenta con dos seeders para mayor facilidad de interacción, se ejecutan con el comando
 
-    $ npm run watch
+    $ php artisan db:seed
+
+El proyecto cuenta con correo electrónico, por lo que es necesario que se coloquen
+los datos de la cuenta a usar para enviar correos o de otra forma el registro de usuarios
+no va a funcionar de manera correcta debido a que se envía un correo de bienvenida
+al usuario.

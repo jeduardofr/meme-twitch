@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Category
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['name', 'thumbnail', 'thumbnail_mime_type', 'is_url', 'user_id'];
 
